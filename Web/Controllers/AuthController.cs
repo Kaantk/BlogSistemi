@@ -53,5 +53,24 @@ namespace Web.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        [HttpGet]
+        public IActionResult Logout()
+        {
+            _authSessionService.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(UserForRegisterViewModel dto)
+        {
+            return View();
+        }
     }
 }

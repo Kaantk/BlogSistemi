@@ -1,8 +1,314 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewBag.Title = "Ana Sayfa";
+    Layout = "~/Views/Shared/_LayoutPublic.cshtml";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container mx-auto px-4 lg:px-8 py-8 space-y-12">
+
+    <!-- Hero Section -->
+    <section class="rounded-2xl overflow-hidden relative group shadow-2xl shadow-gray-200/50 dark:shadow-none">
+        <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+             style="background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200');">
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/50 to-transparent"></div>
+
+        <div class="relative z-10 flex flex-col justify-end min-h-[500px] p-8 md:p-12 lg:p-16 max-w-4xl">
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-primary text-white mb-4 w-fit uppercase tracking-wider">
+                Öne Çıkan
+            </span>
+            <h2 class="text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight mb-4 drop-shadow-sm">
+                Web Geliştirmenin Geleceği: Modern Trendler
+            </h2>
+            <p class="text-gray-200 text-lg md:text-xl mb-8 max-w-2xl font-light leading-relaxed">
+                MVC mimarisindeki son değişiklikleri, yapay zeka entegrasyonlarını ve 2024 web teknolojilerini derinlemesine inceliyoruz.
+            </p>
+            <div class="flex flex-wrap gap-4">
+                <a href="#" class="flex items-center gap-2 px-6 py-3 bg-white text-gray-900 hover:bg-gray-100 rounded-lg font-bold transition-colors">
+                    <span>Devamını Oku</span>
+                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                </a>
+                <div class="flex items-center gap-3 px-4 py-2 bg-black/30 backdrop-blur-sm rounded-lg border border-white/10">
+                    <div class="w-8 h-8 rounded-full bg-cover bg-center border border-white/20"
+                         style="background-image: url('https://ui-avatars.com/api/?name=Kaan+Tetik&background=137fec&color=fff');"></div>
+                    <div class="flex flex-col">
+                        <span class="text-white text-xs font-bold">Kaan Tetik</span>
+                        <span class="text-gray-300 text-[10px]">2 Saat önce</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+        <!-- Blog Posts Feed -->
+        <div class="lg:col-span-8 space-y-8">
+            <div class="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 pb-4">
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary">feed</span>
+                    Son Yazılar
+                </h3>
+                <div class="flex gap-2">
+                    <button class="p-2 text-gray-500 hover:text-primary transition-colors bg-gray-100 dark:bg-gray-800 rounded-md">
+                        <span class="material-symbols-outlined text-xl">grid_view</span>
+                    </button>
+                    <button class="p-2 text-gray-400 hover:text-gray-600 transition-colors">
+                        <span class="material-symbols-outlined text-xl">list</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <!-- Post Card 1 -->
+                <article class="group bg-surface-light dark:bg-surface-dark border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col h-full">
+                    <div class="relative h-48 overflow-hidden">
+                        <div class="absolute top-3 left-3 z-10">
+                            <span class="px-3 py-1 bg-white/90 dark:bg-black/80 backdrop-blur text-primary text-xs font-bold rounded-md">Yazılım</span>
+                        </div>
+                        <div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+                             style="background-image: url('https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600');"></div>
+                    </div>
+                    <div class="p-5 flex flex-col flex-grow">
+                        <div class="flex items-center gap-2 text-xs text-secondary mb-3">
+                            <span class="material-symbols-outlined text-[16px]">calendar_today</span>
+                            <span>Bugün</span>
+                            <span class="mx-1">•</span>
+                            <span class="material-symbols-outlined text-[16px]">schedule</span>
+                            <span>5 dk okuma</span>
+                        </div>
+                        <h4 class="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-primary transition-colors leading-tight">
+                            MVC Temelleri: Tasarım Desenini Anlamak
+                        </h4>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm line-clamp-3 mb-4 flex-grow">
+                            Model-View-Controller yapısının temellerine iniyor ve modern web uygulamalarında nasıl etkili kullanılabileceğini tartışıyoruz.
+                        </p>
+                        <div class="pt-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <div class="w-6 h-6 rounded-full bg-gray-200 bg-cover"
+                                     style="background-image: url('https://ui-avatars.com/api/?name=Kaan+Tetik&background=137fec&color=fff');"></div>
+                                <span class="text-xs font-medium text-gray-700 dark:text-gray-300">Kaan Tetik</span>
+                            </div>
+                            <a class="text-primary text-sm font-bold hover:underline" href="#">Oku</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Post Card 2 -->
+                <article class="group bg-surface-light dark:bg-surface-dark border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col h-full">
+                    <div class="relative h-48 overflow-hidden">
+                        <div class="absolute top-3 left-3 z-10">
+                            <span class="px-3 py-1 bg-white/90 dark:bg-black/80 backdrop-blur text-purple-600 text-xs font-bold rounded-md">Tasarım</span>
+                        </div>
+                        <div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+                             style="background-image: url('https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=600');"></div>
+                    </div>
+                    <div class="p-5 flex flex-col flex-grow">
+                        <div class="flex items-center gap-2 text-xs text-secondary mb-3">
+                            <span class="material-symbols-outlined text-[16px]">calendar_today</span>
+                            <span>Dün</span>
+                            <span class="mx-1">•</span>
+                            <span class="material-symbols-outlined text-[16px]">schedule</span>
+                            <span>7 dk okuma</span>
+                        </div>
+                        <h4 class="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-primary transition-colors leading-tight">
+                            Erişilebilirlik için Tasarım İlkeleri
+                        </h4>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm line-clamp-3 mb-4 flex-grow">
+                            Herkes için web: Engelli kullanıcılar için daha iyi deneyimler tasarlamanın yolları ve WCAG standartları.
+                        </p>
+                        <div class="pt-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <div class="w-6 h-6 rounded-full bg-gray-200 bg-cover"
+                                     style="background-image: url('https://ui-avatars.com/api/?name=Kaan+Tetik&background=137fec&color=fff');"></div>
+                                <span class="text-xs font-medium text-gray-700 dark:text-gray-300">Kaan Tetik</span>
+                            </div>
+                            <a class="text-primary text-sm font-bold hover:underline" href="#">Oku</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Post Card 3 -->
+                <article class="group bg-surface-light dark:bg-surface-dark border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col h-full">
+                    <div class="relative h-48 overflow-hidden">
+                        <div class="absolute top-3 left-3 z-10">
+                            <span class="px-3 py-1 bg-white/90 dark:bg-black/80 backdrop-blur text-green-600 text-xs font-bold rounded-md">Frontend</span>
+                        </div>
+                        <div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+                             style="background-image: url('https://images.unsplash.com/photo-1523437113738-bbd3cc89fb19?w=600');"></div>
+                    </div>
+                    <div class="p-5 flex flex-col flex-grow">
+                        <div class="flex items-center gap-2 text-xs text-secondary mb-3">
+                            <span class="material-symbols-outlined text-[16px]">calendar_today</span>
+                            <span>2 Gün önce</span>
+                            <span class="mx-1">•</span>
+                            <span class="material-symbols-outlined text-[16px]">schedule</span>
+                            <span>4 dk okuma</span>
+                        </div>
+                        <h4 class="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-primary transition-colors leading-tight">
+                            Bootstrap 5 vs Tailwind: Hangisini Seçmeli?
+                        </h4>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm line-clamp-3 mb-4 flex-grow">
+                            CSS framework savaşlarında son durum. Hızlı prototipleme mi yoksa tam özelleştirme mi? Karşılaştırmalı analiz.
+                        </p>
+                        <div class="pt-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <div class="w-6 h-6 rounded-full bg-gray-200 bg-cover"
+                                     style="background-image: url('https://ui-avatars.com/api/?name=Kaan+Tetik&background=137fec&color=fff');"></div>
+                                <span class="text-xs font-medium text-gray-700 dark:text-gray-300">Kaan Tetik</span>
+                            </div>
+                            <a class="text-primary text-sm font-bold hover:underline" href="#">Oku</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Post Card 4 -->
+                <article class="group bg-surface-light dark:bg-surface-dark border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col h-full">
+                    <div class="relative h-48 overflow-hidden">
+                        <div class="absolute top-3 left-3 z-10">
+                            <span class="px-3 py-1 bg-white/90 dark:bg-black/80 backdrop-blur text-red-600 text-xs font-bold rounded-md">Backend</span>
+                        </div>
+                        <div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+                             style="background-image: url('https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600');"></div>
+                    </div>
+                    <div class="p-5 flex flex-col flex-grow">
+                        <div class="flex items-center gap-2 text-xs text-secondary mb-3">
+                            <span class="material-symbols-outlined text-[16px]">calendar_today</span>
+                            <span>3 Gün önce</span>
+                            <span class="mx-1">•</span>
+                            <span class="material-symbols-outlined text-[16px]">schedule</span>
+                            <span>8 dk okuma</span>
+                        </div>
+                        <h4 class="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-primary transition-colors leading-tight">
+                            ASP.NET Core Yenilikleri ve Performans
+                        </h4>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm line-clamp-3 mb-4 flex-grow">
+                            Microsoft'un en son güncellemesiyle gelen performans iyileştirmeleri ve yeni API özellikleri.
+                        </p>
+                        <div class="pt-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <div class="w-6 h-6 rounded-full bg-gray-200 bg-cover"
+                                     style="background-image: url('https://ui-avatars.com/api/?name=Kaan+Tetik&background=137fec&color=fff');"></div>
+                                <span class="text-xs font-medium text-gray-700 dark:text-gray-300">Kaan Tetik</span>
+                            </div>
+                            <a class="text-primary text-sm font-bold hover:underline" href="#">Oku</a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Pagination -->
+            <div class="flex justify-center mt-12">
+                <nav class="flex items-center gap-2">
+                    <a class="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 dark:border-gray-700 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="#">
+                        <span class="material-symbols-outlined">chevron_left</span>
+                    </a>
+                    <a class="w-10 h-10 flex items-center justify-center rounded-lg bg-primary text-white font-bold shadow-lg shadow-primary/30" href="#">1</a>
+                    <a class="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="#">2</a>
+                    <a class="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="#">3</a>
+                    <span class="w-10 h-10 flex items-center justify-center text-gray-400">...</span>
+                    <a class="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 dark:border-gray-700 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="#">
+                        <span class="material-symbols-outlined">chevron_right</span>
+                    </a>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="lg:col-span-4 space-y-8">
+
+            <!-- Author Widget -->
+            <div class="bg-surface-light dark:bg-surface-dark border border-gray-200 dark:border-gray-700 rounded-2xl p-6 shadow-sm">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-16 h-16 rounded-full bg-cover bg-center border-2 border-primary p-1"
+                         style="background-image: url('https://ui-avatars.com/api/?name=Kaan+Tetik&background=137fec&color=fff&size=128');"></div>
+                    <div>
+                        <h4 class="text-lg font-bold text-gray-900 dark:text-white">Kaan Tetik</h4>
+                        <p class="text-sm text-primary font-medium">Yazar & Geliştirici</p>
+                    </div>
+                </div>
+                <p class="text-gray-600 dark:text-gray-300 text-sm mb-6 leading-relaxed">
+                    Teknoloji ve yazılım dünyasındaki deneyimlerimi paylaşıyorum. İSMEK Blog'da modern web teknolojileri üzerine rehberler bulabilirsiniz.
+                </p>
+                <div class="flex gap-2">
+                    <a class="flex-1 flex items-center justify-center h-9 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg text-sm font-medium transition-colors" href="#">
+                        Profil
+                    </a>
+                    <a class="flex-1 flex items-center justify-center h-9 border border-primary text-primary hover:bg-primary hover:text-white rounded-lg text-sm font-medium transition-colors" href="#">
+                        Takip Et
+                    </a>
+                </div>
+            </div>
+
+            <!-- Categories Widget -->
+            <div class="bg-surface-light dark:bg-surface-dark border border-gray-200 dark:border-gray-700 rounded-2xl p-6 shadow-sm">
+                <h4 class="text-lg font-bold text-gray-900 dark:text-white mb-4 border-l-4 border-primary pl-3">Kategoriler</h4>
+                <div class="flex flex-col gap-2">
+                    <a class="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 group transition-colors" href="#">
+                        <div class="flex items-center gap-3">
+                            <span class="p-2 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-md">
+                                <span class="material-symbols-outlined text-sm">code</span>
+                            </span>
+                            <span class="text-gray-700 dark:text-gray-300 font-medium group-hover:text-primary">Yazılım</span>
+                        </div>
+                        <span class="text-xs font-bold text-gray-400 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-full">12</span>
+                    </a>
+                    <a class="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 group transition-colors" href="#">
+                        <div class="flex items-center gap-3">
+                            <span class="p-2 bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-md">
+                                <span class="material-symbols-outlined text-sm">palette</span>
+                            </span>
+                            <span class="text-gray-700 dark:text-gray-300 font-medium group-hover:text-primary">Tasarım</span>
+                        </div>
+                        <span class="text-xs font-bold text-gray-400 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-full">8</span>
+                    </a>
+                    <a class="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 group transition-colors" href="#">
+                        <div class="flex items-center gap-3">
+                            <span class="p-2 bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 rounded-md">
+                                <span class="material-symbols-outlined text-sm">school</span>
+                            </span>
+                            <span class="text-gray-700 dark:text-gray-300 font-medium group-hover:text-primary">Eğitim</span>
+                        </div>
+                        <span class="text-xs font-bold text-gray-400 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-full">5</span>
+                    </a>
+                    <a class="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 group transition-colors" href="#">
+                        <div class="flex items-center gap-3">
+                            <span class="p-2 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-md">
+                                <span class="material-symbols-outlined text-sm">terminal</span>
+                            </span>
+                            <span class="text-gray-700 dark:text-gray-300 font-medium group-hover:text-primary">Teknoloji</span>
+                        </div>
+                        <span class="text-xs font-bold text-gray-400 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-full">15</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Newsletter -->
+            <div class="bg-primary rounded-2xl p-6 text-white relative overflow-hidden">
+                <div class="absolute -top-10 -right-10 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
+                <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-black/10 rounded-full blur-2xl"></div>
+                <h4 class="text-xl font-bold mb-2 relative z-10">Bültene Abone Ol</h4>
+                <p class="text-blue-100 text-sm mb-4 relative z-10">En yeni yazılardan ve teknoloji haberlerinden ilk sizin haberiniz olsun.</p>
+                <form class="space-y-3 relative z-10">
+                    <input class="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 placeholder:text-blue-100 text-white focus:outline-none focus:bg-white/30 focus:border-white transition-colors" placeholder="E-posta adresiniz" type="email" />
+                    <button class="w-full py-3 bg-white text-primary font-bold rounded-lg hover:bg-gray-50 transition-colors shadow-lg shadow-black/10" type="button">
+                        Kaydol
+                    </button>
+                </form>
+            </div>
+
+            <!-- Popular Tags -->
+            <div class="bg-surface-light dark:bg-surface-dark border border-gray-200 dark:border-gray-700 rounded-2xl p-6 shadow-sm">
+                <h4 class="text-lg font-bold text-gray-900 dark:text-white mb-4 border-l-4 border-primary pl-3">Popüler Etiketler</h4>
+                <div class="flex flex-wrap gap-2">
+                    <a class="px-3 py-1 bg-gray-100 dark:bg-gray-800 hover:bg-primary hover:text-white text-gray-600 dark:text-gray-300 text-xs font-medium rounded-full transition-colors" href="#">#MVC</a>
+                    <a class="px-3 py-1 bg-gray-100 dark:bg-gray-800 hover:bg-primary hover:text-white text-gray-600 dark:text-gray-300 text-xs font-medium rounded-full transition-colors" href="#">#WebDesign</a>
+                    <a class="px-3 py-1 bg-gray-100 dark:bg-gray-800 hover:bg-primary hover:text-white text-gray-600 dark:text-gray-300 text-xs font-medium rounded-full transition-colors" href="#">#CSharp</a>
+                    <a class="px-3 py-1 bg-gray-100 dark:bg-gray-800 hover:bg-primary hover:text-white text-gray-600 dark:text-gray-300 text-xs font-medium rounded-full transition-colors" href="#">#JavaScript</a>
+                    <a class="px-3 py-1 bg-gray-100 dark:bg-gray-800 hover:bg-primary hover:text-white text-gray-600 dark:text-gray-300 text-xs font-medium rounded-full transition-colors" href="#">#Frontend</a>
+                    <a class="px-3 py-1 bg-gray-100 dark:bg-gray-800 hover:bg-primary hover:text-white text-gray-600 dark:text-gray-300 text-xs font-medium rounded-full transition-colors" href="#">#Accessibility</a>
+                </div>
+            </div>
+        </aside>
+    </div>
 </div>

@@ -1,0 +1,247 @@
+﻿@using Web.Models.ViewModels.User
+
+@model UserForRegisterViewModel
+
+@{
+    ViewBag.Title = "Kayıt Ol";
+    Layout = "~/Views/Shared/_LayoutPublic.cshtml";
+}
+
+<div class="container mx-auto px-4 py-16">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center max-w-7xl mx-auto">
+
+        <!-- Left Side - Welcome Section -->
+        <div class="hidden lg:block">
+            <div class="rounded-2xl overflow-hidden shadow-2xl relative h-[700px]">
+                <div class="absolute inset-0 bg-cover bg-center"
+                     style="background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800');">
+                </div>
+                <div class="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/50 to-transparent"></div>
+                <div class="relative z-10 flex flex-col justify-end h-full p-12">
+                    <h2 class="text-4xl font-black text-white leading-tight mb-4">
+                        İSMEK BLOG Topluluğuna Katılın
+                    </h2>
+                    <p class="text-gray-200 text-lg font-light leading-relaxed mb-6">
+                        Binlerce içerik üreticisi ve teknoloji meraklısının bir parçası olun. Fikirlerinizi paylaşın, tartışmalara katılın.
+                    </p>
+                    <div class="flex items-center gap-4 text-white/80 text-sm">
+                        <div class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-emerald-400">check_circle</span>
+                            <span>Ücretsiz Üyelik</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-emerald-400">check_circle</span>
+                            <span>Sınırsız İçerik</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side - Register Form -->
+        <div class="flex items-center justify-center">
+            <div class="w-full max-w-md">
+                <div class="bg-surface-light dark:bg-surface-dark border border-gray-200 dark:border-gray-700 rounded-2xl p-8 shadow-xl">
+
+                    <!-- Icon -->
+                    <div class="flex justify-center mb-6">
+                        <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
+                            <span class="material-symbols-outlined text-4xl text-primary">person_add</span>
+                        </div>
+                    </div>
+
+                    <!-- Title -->
+                    <div class="text-center mb-8">
+                        <h3 class="text-3xl font-black text-gray-900 dark:text-white mb-2">Hesap Oluştur</h3>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm">
+                            İSMEK BLOG dünyasına katılın ve içerik üretmeye başlayın.
+                        </p>
+                    </div>
+
+                    <!-- Error Message -->
+                    @if (ViewBag.ErrorMessage != null)
+                    {
+                        <div class="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg flex items-start gap-3">
+                            <span class="material-symbols-outlined text-red-600 dark:text-red-400 text-xl flex-shrink-0 mt-0.5">error</span>
+                            <div class="flex-grow">
+                                <h4 class="text-sm font-bold text-red-800 dark:text-red-300 mb-1">Hata!</h4>
+                                <p class="text-sm text-red-700 dark:text-red-400">@ViewBag.ErrorMessage</p>
+                            </div>
+                        </div>
+                    }
+
+                    <!-- Register Form -->
+                    <form asp-action="Register" asp-controller="Auth" method="post" class="space-y-4">
+
+                        <!-- Full Name Field -->
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                Ad Soyad
+                            </label>
+                            <div class="relative">
+                                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                                    badge
+                                </span>
+                                <input type="text"
+                                       asp-for="FullName"
+                                       class="w-full pl-11 pr-4 py-2.5 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder:text-gray-400 text-sm"
+                                       placeholder="Adınız Soyadınız" />
+                            </div>
+                            <span asp-validation-for="FullName" class="text-xs text-red-600 dark:text-red-400 mt-1"></span>
+                        </div>
+
+                        <!-- Email Field -->
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                E-posta Adresi
+                            </label>
+                            <div class="relative">
+                                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                                    mail
+                                </span>
+                                <input type="email"
+                                       asp-for="Email"
+                                       class="w-full pl-11 pr-4 py-2.5 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder:text-gray-400 text-sm"
+                                       placeholder="ornek@ismek.com" />
+                            </div>
+                            <span asp-validation-for="Email" class="text-xs text-red-600 dark:text-red-400 mt-1"></span>
+                        </div>
+
+                        <!-- Phone Field -->
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                Telefon Numarası
+                            </label>
+                            <div class="relative">
+                                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                                    phone
+                                </span>
+                                <input type="tel"
+                                       asp-for="PhoneNumber"
+                                       class="w-full pl-11 pr-4 py-2.5 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder:text-gray-400 text-sm"
+                                       placeholder="(5XX) XXX XX XX" />
+                            </div>
+                            <span asp-validation-for="PhoneNumber" class="text-xs text-red-600 dark:text-red-400 mt-1"></span>
+                        </div>
+
+                        <!-- Password Field -->
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                Şifre
+                            </label>
+                            <div class="relative">
+                                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                                    lock
+                                </span>
+                                <input type="password"
+                                       asp-for="Password"
+                                       id="password"
+                                       class="w-full pl-11 pr-11 py-2.5 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder:text-gray-400 text-sm"
+                                       placeholder="••••••••" />
+                                <button type="button"
+                                        onclick="togglePassword()"
+                                        class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+                                    <span class="material-symbols-outlined text-[20px]" id="toggleIcon">visibility_off</span>
+                                </button>
+                            </div>
+                            <span asp-validation-for="Password" class="text-xs text-red-600 dark:text-red-400 mt-1"></span>
+                        </div>
+
+                        <!-- Confirm Password Field -->
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                Şifre Tekrar
+                            </label>
+                            <div class="relative">
+                                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                                    lock_reset
+                                </span>
+                                <input type="password"
+                                       asp-for="ConfirmPassword"
+                                       id="confirmPassword"
+                                       class="w-full pl-11 pr-11 py-2.5 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder:text-gray-400 text-sm"
+                                       placeholder="••••••••" />
+                                <button type="button"
+                                        onclick="toggleConfirmPassword()"
+                                        class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+                                    <span class="material-symbols-outlined text-[20px]" id="toggleConfirmIcon">visibility_off</span>
+                                </button>
+                            </div>
+                            <span asp-validation-for="ConfirmPassword" class="text-xs text-red-600 dark:text-red-400 mt-1"></span>
+                        </div>
+
+                        <!-- Terms Checkbox -->
+                        <div class="flex items-start">
+                            <input type="checkbox"
+                                   asp-for="AcceptTerms"
+                                   class="w-4 h-4 mt-1 text-primary bg-gray-100 border-gray-300 rounded focus:ring-primary focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                            <label class="ml-2 text-sm text-gray-600 dark:text-gray-400 select-none">
+                                <a href="#" class="font-semibold text-primary hover:text-primary-dark transition-colors">Kullanım Şartları</a>'nı okudum ve kabul ediyorum.
+                            </label>
+                        </div>
+                        <span asp-validation-for="AcceptTerms" class="text-xs text-red-600 dark:text-red-400"></span>
+
+                        <!-- Submit Button -->
+                        <button type="submit"
+                                class="w-full py-2.5 bg-primary hover:bg-primary-dark text-white font-semibold rounded-lg shadow-lg shadow-primary/30 transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 text-sm mt-6">
+                            <span>Kayıt Ol</span>
+                            <span class="material-symbols-outlined text-xl">arrow_forward</span>
+                        </button>
+
+                        <!-- Divider -->
+                        <div class="relative flex items-center justify-center my-6">
+                            <div class="border-t border-gray-300 dark:border-gray-600 w-full"></div>
+                            <span class="absolute bg-surface-light dark:bg-surface-dark px-4 text-sm text-gray-500 dark:text-gray-400">
+                                Zaten hesabınız var mı?
+                            </span>
+                        </div>
+
+                        <!-- Login Link -->
+                        <div class="text-center">
+                            <a href="@Url.Action("Login", "Auth")" class="font-semibold text-primary hover:text-primary-dark transition-colors text-sm">
+                                Giriş Yap
+                            </a>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Footer Note -->
+                <p class="text-center text-xs text-gray-500 dark:text-gray-400 mt-6">
+                    © @DateTime.Now.Year İSMEK BLOG - Developed by Kaan Tetik
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('toggleIcon');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.textContent = 'visibility';
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.textContent = 'visibility_off';
+            }
+        }
+
+        function toggleConfirmPassword() {
+            const confirmPasswordInput = document.getElementById('confirmPassword');
+            const toggleConfirmIcon = document.getElementById('toggleConfirmIcon');
+
+            if (confirmPasswordInput.type === 'password') {
+                confirmPasswordInput.type = 'text';
+                toggleConfirmIcon.textContent = 'visibility';
+            } else {
+                confirmPasswordInput.type = 'password';
+                toggleConfirmIcon.textContent = 'visibility_off';
+            }
+        }
+    </script>
+}

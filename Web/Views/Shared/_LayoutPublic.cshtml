@@ -1,49 +1,192 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html class="light" lang="tr">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Web</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Web.styles.css" asp-append-version="true" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>@ViewBag.Title - İSMEK BLOG</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "primary-dark": "#0f6bc1",
+                        "secondary": "#617589",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a2634",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.75rem",
+                        "xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        body { font-family: 'Work Sans', sans-serif; }
+    </style>
+
+    @RenderSection("Styles", required: false)
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Web</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
+<body class="bg-background-light dark:bg-background-dark text-[#111418] dark:text-white transition-colors duration-200">
+    <div class="flex flex-col min-h-screen">
+
+        <!-- Top Navigation -->
+        <header class="sticky top-0 z-50 bg-surface-light dark:bg-surface-dark border-b border-gray-200 dark:border-gray-800 shadow-sm transition-colors duration-200">
+            <div class="container mx-auto px-4 lg:px-8">
+                <div class="flex items-center justify-between h-20">
+
+                    <!-- Logo & Brand -->
+                    <div class="flex items-center gap-8">
+                        <a class="flex items-center gap-3 group" href="@Url.Action("Index", "Home")">
+                            <div class="flex items-center justify-center size-10 bg-primary/10 rounded-lg text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                                <span class="material-symbols-outlined text-2xl">article</span>
+                            </div>
+                            <h1 class="text-2xl font-black tracking-tight text-gray-900 dark:text-white group-hover:text-primary transition-colors">İSMEK BLOG</h1>
+                        </a>
+
+                        <!-- Desktop Menu -->
+                        <nav class="hidden md:flex items-center gap-1 ml-4">
+                            <a class="px-4 py-2 text-sm font-semibold text-primary bg-primary/5 rounded-lg" href="@Url.Action("Index", "Home")">Ana Sayfa</a>
+                            <a class="px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all" href="#">Hakkımızda</a>
+                            <a class="px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all" href="#">İletişim</a>
+                        </nav>
+                    </div>
+
+                    <!-- Search & Auth -->
+                    <div class="flex items-center gap-2 sm:gap-4">
+                        <div class="hidden sm:flex items-center border-r border-gray-200 dark:border-gray-700 pr-4">
+                            <button class="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-white transition-colors">
+                                <span class="material-symbols-outlined text-[24px]">search</span>
+                            </button>
+                        </div>
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <!-- Kullanıcı Giriş Yapmış -->
+                            <div class="flex items-center gap-3">
+                                <a class="flex items-center gap-3 pl-1 pr-3 py-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all border border-transparent hover:border-gray-200 dark:hover:border-gray-700 group"
+                                   href="@Url.Action("Profile", "Account")">
+                                    <div class="relative">
+                                        <img alt="@User.Identity.Name"
+                                             class="w-8 h-8 rounded-full object-cover border border-gray-200 dark:border-gray-700 shadow-sm"
+                                             src="@(ViewBag.UserAvatar ?? "https://ui-avatars.com/api/?name=" + User.Identity.Name + "&background=137fec&color=fff")" />
+                                        <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-white dark:border-background-dark rounded-full"></span>
+                                    </div>
+                                    <span class="text-sm font-bold text-gray-700 dark:text-gray-200 group-hover:text-primary transition-colors hidden sm:block">@User.Identity.Name</span>
+                                </a>
+                                <a class="flex items-center gap-2 text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/10 px-3 py-2 rounded-lg transition-colors text-sm font-medium"
+                                   href="@Url.Action("Logout", "Auth")"
+                                   title="Oturumu Sonlandır">
+                                    <span class="material-symbols-outlined text-[20px]">logout</span>
+                                    <span class="hidden lg:inline">Çıkış Yap</span>
+                                </a>
+                            </div>
+                        }
+                        else
+                        {
+                            <!-- Kullanıcı Giriş Yapmamış -->
+                            <div class="flex items-center gap-2">
+                                <a href="@Url.Action("Login", "Auth")"
+                                   class="hidden sm:flex items-center justify-center h-10 px-5 text-sm font-bold text-primary hover:bg-primary/5 rounded-lg transition-colors">
+                                    Giriş Yap
+                                </a>
+                                <a href="@Url.Action("Register", "Auth")"
+                                   class="flex items-center justify-center h-10 px-5 bg-primary hover:bg-primary-dark text-white text-sm font-bold rounded-lg shadow-md shadow-primary/20 transition-all transform hover:scale-105">
+                                    Kayıt Ol
+                                </a>
+                            </div>
+                        }
+                    </div>
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-grow">
             @RenderBody()
         </main>
+
+        <!-- Footer -->
+        <footer class="bg-surface-light dark:bg-surface-dark border-t border-gray-200 dark:border-gray-800 mt-12 py-12">
+            <div class="container mx-auto px-4 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                    <div class="col-span-1 md:col-span-1">
+                        <div class="flex items-center gap-2 mb-4">
+                            <div class="flex items-center justify-center size-8 bg-primary rounded-lg text-white">
+                                <span class="material-symbols-outlined text-lg">article</span>
+                            </div>
+                            <h2 class="text-lg font-black text-gray-900 dark:text-white">İSMEK BLOG</h2>
+                        </div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">
+                            Teknoloji, tasarım ve yazılım dünyasına dair güncel bilgiler, ders notları ve sektörel haberler.
+                        </p>
+                        <div class="flex gap-4">
+                            <a class="text-gray-400 hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined text-xl">thumb_up</span></a>
+                            <a class="text-gray-400 hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined text-xl">share</span></a>
+                            <a class="text-gray-400 hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined text-xl">mail</span></a>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-gray-900 dark:text-white mb-4">Hızlı Bağlantılar</h4>
+                        <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                            <li><a class="hover:text-primary transition-colors" href="@Url.Action("Index", "Home")">Ana Sayfa</a></li>
+                            <li><a class="hover:text-primary transition-colors" href="#">Hakkımızda</a></li>
+                            <li><a class="hover:text-primary transition-colors" href="#">İletişim</a></li>
+                            <li><a class="hover:text-primary transition-colors" href="#">Kullanım Şartları</a></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-gray-900 dark:text-white mb-4">Kategoriler</h4>
+                        <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                            <li><a class="hover:text-primary transition-colors" href="#">Web Geliştirme</a></li>
+                            <li><a class="hover:text-primary transition-colors" href="#">Mobil Uygulama</a></li>
+                            <li><a class="hover:text-primary transition-colors" href="#">Veri Bilimi</a></li>
+                            <li><a class="hover:text-primary transition-colors" href="#">UI/UX Tasarım</a></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-gray-900 dark:text-white mb-4">Admin</h4>
+                        <a class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-primary transition-colors mb-2" href="@Url.Action("Login", "Admin")">
+                            <span class="material-symbols-outlined text-sm">admin_panel_settings</span>
+                            Yönetici Girişi
+                        </a>
+                        <p class="text-xs text-gray-400 mt-4">
+                            © @DateTime.Now.Year İSMEK BLOG. <br />
+                            Design by Kaan Tetik.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+    <!-- Mobile Menu Button (Hidden logic, visual only for layout) -->
+    <div class="fixed bottom-6 right-6 z-50 md:hidden">
+        <button class="bg-primary text-white p-4 rounded-full shadow-lg shadow-primary/40 flex items-center justify-center">
+            <span class="material-symbols-outlined">menu</span>
+        </button>
+    </div>
+
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

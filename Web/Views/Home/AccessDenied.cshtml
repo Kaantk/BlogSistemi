@@ -1,7 +1,97 @@
 ﻿@{
-    ViewData["Title"] = "Yetkisiz erişim !";
+    ViewBag.Title = "Erişim Engellendi";
+    Layout = "~/Views/Shared/_LayoutPublic.cshtml";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Erişim Engellendi</h1>
+<div class="min-h-[70vh] flex items-center justify-center px-4 py-16">
+    <div class="max-w-2xl w-full text-center bg-surface-light dark:bg-surface-dark border border-gray-200 dark:border-gray-700 rounded-2xl p-8 shadow-xl">
+
+        <!-- Icon -->
+        <div class="flex justify-center mb-8">
+            <div class="relative">
+                <div class="w-32 h-32 bg-red-100 dark:bg-red-900/20 rounded-full flex items-center justify-center">
+                    <span class="material-symbols-outlined text-red-600 dark:text-red-400" style="font-size: 64px;">block</span>
+                </div>
+                <div class="absolute -top-2 -right-2 w-12 h-12 bg-orange-100 dark:bg-orange-900/20 rounded-full flex items-center justify-center animate-pulse">
+                    <span class="material-symbols-outlined text-orange-600 dark:text-orange-400 text-2xl">warning</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Title -->
+        <h1 class="text-4xl md:text-5xl font-black text-gray-900 dark:text-white mb-4">
+            Erişim Engellendi
+        </h1>
+
+        <!-- Message -->
+        <p class="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-xl mx-auto leading-relaxed">
+            Bu sayfaya erişim yetkiniz bulunmamaktadır. Eğer bu sayfaya erişmeniz gerektiğini düşünüyorsanız, lütfen yönetici ile iletişime geçin.
+        </p>
+
+        <!-- Error Code -->
+        <div class="inline-flex items-center gap-2 px-4 py-2 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg mb-8">
+            <span class="material-symbols-outlined text-red-600 dark:text-red-400 text-sm">info</span>
+            <span class="text-sm font-semibold text-red-800 dark:text-red-300">Hata Kodu: 403 - Forbidden</span>
+        </div>
+
+        <!-- Reason (Optional) -->
+        @if (ViewBag.Reason != null)
+        {
+            <div class="mb-8 p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg">
+                <div class="flex items-start gap-3">
+                    <span class="material-symbols-outlined text-amber-600 dark:text-amber-400 flex-shrink-0">info</span>
+                    <div class="text-left flex-grow">
+                        <h3 class="text-sm font-bold text-amber-900 dark:text-amber-300 mb-1">Sebep:</h3>
+                        <p class="text-sm text-amber-800 dark:text-amber-400">@ViewBag.Reason</p>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <!-- Actions -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <a href="@Url.Action("Index", "Home")"
+               class="flex items-center gap-2 px-6 py-3 bg-primary hover:bg-primary-dark text-white rounded-lg font-bold shadow-md shadow-primary/20 transition-all transform hover:scale-105">
+                <span class="material-symbols-outlined text-xl">home</span>
+                Ana Sayfaya Dön
+            </a>
+
+            <button onclick="history.back()"
+                    class="flex items-center gap-2 px-6 py-3 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg font-bold transition-all">
+                <span class="material-symbols-outlined text-xl">arrow_back</span>
+                Geri Git
+            </button>
+        </div>
+
+        <!-- Additional Help -->
+        <div class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+            <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Yardıma mı ihtiyacınız var?</p>
+            <div class="flex flex-wrap gap-6 justify-center text-sm">
+                <a href="@Url.Action("Login", "Auth")"
+                   class="flex items-center gap-2 text-primary hover:text-primary-dark transition-colors font-medium">
+                    <span class="material-symbols-outlined text-lg">login</span>
+                    Giriş Yap
+                </a>
+                <a href="#"
+                   class="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-primary transition-colors font-medium">
+                    <span class="material-symbols-outlined text-lg">mail</span>
+                    İletişim
+                </a>
+                <a href="#"
+                   class="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-primary transition-colors font-medium">
+                    <span class="material-symbols-outlined text-lg">help</span>
+                    Yardım Merkezi
+                </a>
+            </div>
+        </div>
+    </div>
 </div>
+
+@section Scripts {
+    <script>
+        // Auto redirect after 10 seconds (optional)
+        // setTimeout(function() {
+        //     window.location.href = '@Url.Action("Index", "Home")';
+        // }, 10000);
+    </script>
+}
