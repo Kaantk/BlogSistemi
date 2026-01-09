@@ -1,0 +1,209 @@
+﻿@{
+    ViewBag.Title = "Profilim";
+    Layout = "~/Views/Shared/_LayoutPublic.cshtml";
+}
+
+<div class="container mx-auto px-4 lg:px-8 py-8 max-w-[1200px]">
+
+    <!-- Profile Header -->
+    <div class="bg-surface-light dark:bg-surface-dark rounded-2xl p-6 md:p-8 shadow-sm border border-gray-200 dark:border-gray-700 mb-8">
+        <div class="flex flex-col md:flex-row gap-6 items-center md:items-start">
+            <div class="relative">
+                <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-white dark:border-gray-800 shadow-lg">
+                    <img src="@(ViewBag.UserAvatar ?? "https://ui-avatars.com/api/?name=" + User.Identity.Name + "&background=137fec&color=fff&size=256")"
+                         alt="@User.Identity.Name"
+                         class="w-full h-full object-cover" />
+                </div>
+                <div class="absolute -bottom-2 -right-2 bg-primary text-white p-2 rounded-full shadow-lg">
+                    <span class="material-symbols-outlined text-lg">verified</span>
+                </div>
+            </div>
+
+            <div class="flex-1 text-center md:text-left">
+                <h1 class="text-3xl font-black text-gray-900 dark:text-white mb-2">@User.Identity.Name</h1>
+                <p class="text-primary text-lg font-semibold mb-3">@(ViewBag.UserTitle ?? "Yazılım Eğitmeni & Blog Yazarı")</p>
+                <p class="text-gray-600 dark:text-gray-400 leading-relaxed max-w-2xl">
+                    @(ViewBag.UserBio ?? "MVC mimarisi, Bootstrap modernizasyonu ve modern web teknolojileri üzerine derinlemesine teknik içerikler üretiyorum. İSMEK bünyesinde geleceğin yazılımcılarını yetiştiriyoruz.")
+                </p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-3">
+                <a href="@Url.Action("EditProfile", "Account")"
+                   class="flex items-center justify-center gap-2 px-5 py-2.5 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg font-bold hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                    <span class="material-symbols-outlined text-[20px]">edit</span>
+                    <span>Profili Düzenle</span>
+                </a>
+                <button class="flex items-center justify-center gap-2 px-5 py-2.5 bg-primary text-white rounded-lg font-bold hover:bg-primary-dark shadow-md shadow-primary/20 transition-all">
+                    <span class="material-symbols-outlined text-[20px]">share</span>
+                    <span>Paylaş</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Stats -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div class="bg-surface-light dark:bg-surface-dark border border-gray-200 dark:border-gray-700 rounded-xl p-5 shadow-sm hover:-translate-y-1 transition-transform">
+            <p class="text-primary text-3xl font-black mb-2">@(ViewBag.TotalPosts ?? 42)</p>
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-gray-400 text-sm">article</span>
+                <p class="text-gray-600 dark:text-gray-400 text-sm font-semibold uppercase tracking-wider">Toplam Yazı</p>
+            </div>
+        </div>
+
+        <div class="bg-surface-light dark:bg-surface-dark border border-gray-200 dark:border-gray-700 rounded-xl p-5 shadow-sm hover:-translate-y-1 transition-transform">
+            <p class="text-gray-900 dark:text-white text-3xl font-black mb-2">@(ViewBag.TotalFollowers ?? "1.2K")</p>
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-gray-400 text-sm">group</span>
+                <p class="text-gray-600 dark:text-gray-400 text-sm font-semibold uppercase tracking-wider">Takipçi</p>
+            </div>
+        </div>
+
+        <div class="bg-surface-light dark:bg-surface-dark border border-gray-200 dark:border-gray-700 rounded-xl p-5 shadow-sm hover:-translate-y-1 transition-transform">
+            <p class="text-gray-900 dark:text-white text-3xl font-black mb-2">@(ViewBag.TotalViews ?? "15.4K")</p>
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-gray-400 text-sm">visibility</span>
+                <p class="text-gray-600 dark:text-gray-400 text-sm font-semibold uppercase tracking-wider">Okunma</p>
+            </div>
+        </div>
+
+        <div class="bg-surface-light dark:bg-surface-dark border border-gray-200 dark:border-gray-700 rounded-xl p-5 shadow-sm hover:-translate-y-1 transition-transform">
+            <p class="text-gray-900 dark:text-white text-3xl font-black mb-2">@(ViewBag.Rating ?? "4.8")</p>
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-gray-400 text-sm">star</span>
+                <p class="text-gray-600 dark:text-gray-400 text-sm font-semibold uppercase tracking-wider">Puan</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabs Section -->
+    <div class="mb-6">
+        <div class="flex border-b border-gray-200 dark:border-gray-700 gap-8 overflow-x-auto">
+            <a class="flex items-center gap-2 border-b-[3px] border-primary text-primary pb-3 pt-4 transition-all whitespace-nowrap" href="#">
+                <span class="material-symbols-outlined text-[20px]">article</span>
+                <span class="text-sm font-bold">Yazılarım</span>
+            </a>
+            <a class="flex items-center gap-2 border-b-[3px] border-transparent text-gray-600 dark:text-gray-400 pb-3 pt-4 hover:text-primary transition-all whitespace-nowrap" href="#">
+                <span class="material-symbols-outlined text-[20px]">draft</span>
+                <span class="text-sm font-bold">Taslaklar</span>
+            </a>
+            <a class="flex items-center gap-2 border-b-[3px] border-transparent text-gray-600 dark:text-gray-400 pb-3 pt-4 hover:text-primary transition-all whitespace-nowrap" href="#">
+                <span class="material-symbols-outlined text-[20px]">bookmark</span>
+                <span class="text-sm font-bold">Kaydedilenler</span>
+            </a>
+            <a class="flex items-center gap-2 border-b-[3px] border-transparent text-gray-600 dark:text-gray-400 pb-3 pt-4 hover:text-primary transition-all whitespace-nowrap" href="#">
+                <span class="material-symbols-outlined text-[20px]">info</span>
+                <span class="text-sm font-bold">Hakkında</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Blog Post Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-4">
+
+        <!-- Post Card 1 -->
+        <article class="group flex flex-col bg-surface-light dark:bg-surface-dark border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300">
+            <div class="relative h-48 overflow-hidden">
+                <div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+                     style="background-image: url('https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=600');"></div>
+            </div>
+            <div class="p-5 flex flex-col flex-1">
+                <div class="flex items-center gap-2 mb-3">
+                    <span class="bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded">Web Tasarım</span>
+                    <span class="text-gray-400 text-xs">•</span>
+                    <span class="text-gray-500 dark:text-gray-400 text-xs">12 Haz 2024</span>
+                </div>
+                <h3 class="text-gray-900 dark:text-white text-xl font-bold leading-snug mb-2 group-hover:text-primary transition-colors cursor-pointer">
+                    Modern Web Tasarımı ve Bootstrap 5
+                </h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed line-clamp-2 mb-4 flex-grow">
+                    Web tasarım dünyasındaki son trendler ve Bootstrap 5'in yeni özellikleri ile nasıl hızlı prototipleme yapabileceğinizi keşfedin.
+                </p>
+                <div class="mt-auto flex items-center justify-between border-t border-gray-100 dark:border-gray-800 pt-4">
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-gray-400 text-sm">schedule</span>
+                        <span class="text-gray-500 dark:text-gray-400 text-xs">5 dk okuma</span>
+                    </div>
+                    <a href="#" class="text-primary text-sm font-bold flex items-center hover:underline">
+                        Oku <span class="material-symbols-outlined text-sm ml-1">arrow_forward</span>
+                    </a>
+                </div>
+            </div>
+        </article>
+
+        <!-- Post Card 2 -->
+        <article class="group flex flex-col bg-surface-light dark:bg-surface-dark border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300">
+            <div class="relative h-48 overflow-hidden">
+                <div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+                     style="background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600');"></div>
+            </div>
+            <div class="p-5 flex flex-col flex-1">
+                <div class="flex items-center gap-2 mb-3">
+                    <span class="bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded">Backend</span>
+                    <span class="text-gray-400 text-xs">•</span>
+                    <span class="text-gray-500 dark:text-gray-400 text-xs">10 Haz 2024</span>
+                </div>
+                <h3 class="text-gray-900 dark:text-white text-xl font-bold leading-snug mb-2 group-hover:text-primary transition-colors cursor-pointer">
+                    MVC Yapısı Nedir? Neden Kullanmalıyız?
+                </h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed line-clamp-2 mb-4 flex-grow">
+                    Model-View-Controller mimarisinin temelleri ve büyük ölçekli projelerde sağladığı sürdürülebilirlik avantajları.
+                </p>
+                <div class="mt-auto flex items-center justify-between border-t border-gray-100 dark:border-gray-800 pt-4">
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-gray-400 text-sm">schedule</span>
+                        <span class="text-gray-500 dark:text-gray-400 text-xs">8 dk okuma</span>
+                    </div>
+                    <a href="#" class="text-primary text-sm font-bold flex items-center hover:underline">
+                        Oku <span class="material-symbols-outlined text-sm ml-1">arrow_forward</span>
+                    </a>
+                </div>
+            </div>
+        </article>
+
+        <!-- Post Card 3 -->
+        <article class="group flex flex-col bg-surface-light dark:bg-surface-dark border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300">
+            <div class="relative h-48 overflow-hidden">
+                <div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+                     style="background-image: url('https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=600');"></div>
+            </div>
+            <div class="p-5 flex flex-col flex-1">
+                <div class="flex items-center gap-2 mb-3">
+                    <span class="bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded">Proje Yönetimi</span>
+                    <span class="text-gray-400 text-xs">•</span>
+                    <span class="text-gray-500 dark:text-gray-400 text-xs">05 Haz 2024</span>
+                </div>
+                <h3 class="text-gray-900 dark:text-white text-xl font-bold leading-snug mb-2 group-hover:text-primary transition-colors cursor-pointer">
+                    Hızlı Prototipleme Teknikleri
+                </h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed line-clamp-2 mb-4 flex-grow">
+                    Proje geliştirme süreçlerini hızlandıran en iyi araçlar ve metodolojiler üzerine kapsamlı bir rehber.
+                </p>
+                <div class="mt-auto flex items-center justify-between border-t border-gray-100 dark:border-gray-800 pt-4">
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-gray-400 text-sm">schedule</span>
+                        <span class="text-gray-500 dark:text-gray-400 text-xs">6 dk okuma</span>
+                    </div>
+                    <a href="#" class="text-primary text-sm font-bold flex items-center hover:underline">
+                        Oku <span class="material-symbols-outlined text-sm ml-1">arrow_forward</span>
+                    </a>
+                </div>
+            </div>
+        </article>
+    </div>
+
+    <!-- Pagination -->
+    <div class="flex justify-center items-center gap-2 py-12">
+        <button class="flex items-center justify-center size-10 rounded-lg border border-gray-200 dark:border-gray-700 bg-surface-light dark:bg-surface-dark text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+            <span class="material-symbols-outlined">chevron_left</span>
+        </button>
+        <button class="flex items-center justify-center size-10 rounded-lg bg-primary text-white font-bold text-sm shadow-md shadow-primary/20">1</button>
+        <button class="flex items-center justify-center size-10 rounded-lg border border-gray-200 dark:border-gray-700 bg-surface-light dark:bg-surface-dark text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors font-bold text-sm">2</button>
+        <button class="flex items-center justify-center size-10 rounded-lg border border-gray-200 dark:border-gray-700 bg-surface-light dark:bg-surface-dark text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors font-bold text-sm">3</button>
+        <span class="text-gray-400 px-1">...</span>
+        <button class="flex items-center justify-center size-10 rounded-lg border border-gray-200 dark:border-gray-700 bg-surface-light dark:bg-surface-dark text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors font-bold text-sm">14</button>
+        <button class="flex items-center justify-center size-10 rounded-lg border border-gray-200 dark:border-gray-700 bg-surface-light dark:bg-surface-dark text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+            <span class="material-symbols-outlined">chevron_right</span>
+        </button>
+    </div>
+</div>

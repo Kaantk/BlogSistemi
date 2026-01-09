@@ -1,7 +1,7 @@
 ﻿
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Web.Models.ViewModels.User;
+using Web.Models.Common.User;
 using Web.Services.Auth.Abstract;
 
 namespace Web.Controllers
@@ -69,6 +69,12 @@ namespace Web.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Register(UserForRegisterViewModel dto)
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult ForgotPassword()
         {
             return View();
         }

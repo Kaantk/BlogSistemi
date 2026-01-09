@@ -1,0 +1,237 @@
+﻿@using Web.Models.Common.User
+
+@model UserSettingsViewModel
+
+@{
+    ViewBag.Title = "Hesap Ayarları";
+    Layout = "~/Views/Shared/_LayoutPublic.cshtml";
+}
+
+<div class="container mx-auto px-4 lg:px-8 py-8 max-w-[1200px]">
+
+    <!-- Page Heading -->
+    <div class="mb-8">
+        <h1 class="text-gray-900 dark:text-white text-3xl font-black leading-tight mb-2">
+            Hesap Ayarları
+        </h1>
+        <p class="text-gray-600 dark:text-gray-400 text-base">
+            Kişisel bilgilerinizi, şifrenizi ve bildirimlerinizi bu ekrandan yönetin.
+        </p>
+    </div>
+
+    <div class="flex flex-col lg:flex-row gap-8">
+
+        <!-- Side Navigation Sidebar -->
+        <aside class="w-full lg:w-72 shrink-0">
+            <div class="flex flex-col gap-4 bg-surface-light dark:bg-surface-dark p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm sticky top-24">
+
+                <!-- User Info -->
+                <div class="flex gap-4 items-center pb-4 border-b border-gray-200 dark:border-gray-700">
+                    <div class="w-12 h-12 rounded-full bg-cover bg-center"
+                         style='background-image: url("@(ViewBag.UserAvatar ?? "https://ui-avatars.com/api/?name=" + User.Identity.Name + "&background=137fec&color=fff")");'></div>
+                    <div class="flex flex-col">
+                        <h3 class="text-gray-900 dark:text-white text-base font-bold leading-none">@User.Identity.Name</h3>
+                        <p class="text-gray-600 dark:text-gray-400 text-xs mt-1">@(ViewBag.UserRole ?? "Yazar / Editör")</p>
+                    </div>
+                </div>
+
+                <!-- Navigation Links -->
+                <nav class="flex flex-col gap-1">
+                    <a class="flex items-center gap-3 px-3 py-3 rounded-lg bg-gray-100 dark:bg-gray-800 text-primary"
+                       href="@Url.Action("Settings", "Account")">
+                        <span class="material-symbols-outlined text-2xl">person</span>
+                        <p class="text-sm font-semibold">Profil Bilgileri</p>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-900 dark:text-gray-300 transition-colors"
+                       href="#password">
+                        <span class="material-symbols-outlined text-2xl">lock</span>
+                        <p class="text-sm font-medium">Şifre Değiştir</p>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-900 dark:text-gray-300 transition-colors"
+                       href="#notifications">
+                        <span class="material-symbols-outlined text-2xl">notifications</span>
+                        <p class="text-sm font-medium">Bildirim Tercihleri</p>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-900 dark:text-gray-300 transition-colors"
+                       href="@Url.Action("Favorites", "Account")">
+                        <span class="material-symbols-outlined text-2xl">favorite</span>
+                        <p class="text-sm font-medium">Favorilerim</p>
+                    </a>
+
+                    <hr class="my-2 border-gray-200 dark:border-gray-700" />
+
+                    <a class="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 text-red-600 transition-colors"
+                       href="#delete">
+                        <span class="material-symbols-outlined text-2xl">delete_forever</span>
+                        <p class="text-sm font-medium">Hesabı Sil</p>
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <div class="flex-1 flex flex-col gap-6">
+
+            <!-- Personal Info Card -->
+            <div class="bg-surface-light dark:bg-surface-dark p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
+                <h2 class="text-gray-900 dark:text-white text-xl font-bold mb-6">Profil Bilgileri</h2>
+
+                <form asp-action="UpdateProfile" asp-controller="Account" method="post" enctype="multipart/form-data">
+                    <div class="flex flex-col gap-6">
+
+                        <div class="flex flex-col md:flex-row gap-6">
+                            <!-- Input Fields -->
+                            <div class="flex-1 space-y-4">
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Ad</label>
+                                    <input asp-for="FirstName"
+                                           class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-800 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                                           type="text" />
+                                    <span asp-validation-for="FirstName" class="text-xs text-red-600 dark:text-red-400 mt-1"></span>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Soyad</label>
+                                    <input asp-for="LastName"
+                                           class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-800 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                                           type="text" />
+                                    <span asp-validation-for="LastName" class="text-xs text-red-600 dark:text-red-400 mt-1"></span>
+                                </div>
+                            </div>
+
+                            <!-- Profile Picture Upload -->
+                            <div class="flex flex-col items-center justify-center p-6 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-xl bg-gray-50 dark:bg-gray-900/40 w-full md:w-64">
+                                <div class="w-24 h-24 rounded-full bg-cover bg-center mb-4"
+                                     style='background-image: url("@(ViewBag.UserAvatar ?? "https://ui-avatars.com/api/?name=" + User.Identity.Name + "&background=137fec&color=fff&size=256")");'></div>
+                                <label class="text-sm font-bold text-primary hover:underline cursor-pointer">
+                                    Fotoğrafı Değiştir
+                                    <input type="file" asp-for="ProfileImage" class="hidden" accept="image/*" />
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">E-posta Adresi</label>
+                                <input asp-for="Email"
+                                       class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-800 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                                       type="email" />
+                                <span asp-validation-for="Email" class="text-xs text-red-600 dark:text-red-400 mt-1"></span>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Telefon</label>
+                                <input asp-for="PhoneNumber"
+                                       class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-800 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                                       type="tel" />
+                                <span asp-validation-for="PhoneNumber" class="text-xs text-red-600 dark:text-red-400 mt-1"></span>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end pt-4">
+                            <button type="submit"
+                                    class="bg-primary text-white font-bold py-3 px-8 rounded-lg hover:bg-primary-dark transition-all shadow-lg shadow-primary/20">
+                                Değişiklikleri Kaydet
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Password Change Card -->
+            <div id="password" class="bg-surface-light dark:bg-surface-dark p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
+                <h2 class="text-gray-900 dark:text-white text-xl font-bold mb-6">Güvenlik ve Şifre</h2>
+
+                <form asp-action="ChangePassword" asp-controller="Account" method="post">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Mevcut Şifre</label>
+                            <input asp-for="CurrentPassword"
+                                   class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-800 focus:border-primary outline-none"
+                                   placeholder="••••••••"
+                                   type="password" />
+                            <span asp-validation-for="CurrentPassword" class="text-xs text-red-600 dark:text-red-400 mt-1"></span>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Yeni Şifre</label>
+                            <input asp-for="NewPassword"
+                                   class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-800 focus:border-primary outline-none"
+                                   placeholder="Yeni şifreniz"
+                                   type="password" />
+                            <span asp-validation-for="NewPassword" class="text-xs text-red-600 dark:text-red-400 mt-1"></span>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Yeni Şifre (Tekrar)</label>
+                            <input asp-for="ConfirmPassword"
+                                   class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-800 focus:border-primary outline-none"
+                                   placeholder="Tekrar yazın"
+                                   type="password" />
+                            <span asp-validation-for="ConfirmPassword" class="text-xs text-red-600 dark:text-red-400 mt-1"></span>
+                        </div>
+                    </div>
+                    <div class="flex justify-end pt-6">
+                        <button type="submit"
+                                class="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white font-bold py-3 px-8 rounded-lg border border-gray-300 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all">
+                            Şifreyi Güncelle
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Notification Preferences Card -->
+            <div id="notifications" class="bg-surface-light dark:bg-surface-dark p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
+                <h2 class="text-gray-900 dark:text-white text-xl font-bold mb-6">Bildirim Tercihleri</h2>
+
+                <form asp-action="UpdateNotifications" asp-controller="Account" method="post">
+                    <div class="space-y-4">
+                        <!-- Email Notifications -->
+                        <div class="flex items-center justify-between py-3 border-b border-gray-200 dark:border-gray-700 last:border-0">
+                            <div>
+                                <p class="font-semibold text-gray-900 dark:text-white text-sm">E-posta Bildirimleri</p>
+                                <p class="text-xs text-gray-600 dark:text-gray-400">Yeni yazılar yayınlandığında bildirim al.</p>
+                            </div>
+                            <label class="inline-flex items-center cursor-pointer">
+                                <input asp-for="EmailNotifications" type="checkbox" class="sr-only peer" />
+                                <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+                            </label>
+                        </div>
+
+                        <!-- Weekly Newsletter -->
+                        <div class="flex items-center justify-between py-3 border-b border-gray-200 dark:border-gray-700 last:border-0">
+                            <div>
+                                <p class="font-semibold text-gray-900 dark:text-white text-sm">Haftalık Bülten</p>
+                                <p class="text-xs text-gray-600 dark:text-gray-400">Haftalık en popüler içerikleri özet olarak al.</p>
+                            </div>
+                            <label class="inline-flex items-center cursor-pointer">
+                                <input asp-for="WeeklyNewsletter" type="checkbox" class="sr-only peer" />
+                                <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+                            </label>
+                        </div>
+
+                        <!-- Comment Notifications -->
+                        <div class="flex items-center justify-between py-3">
+                            <div>
+                                <p class="font-semibold text-gray-900 dark:text-white text-sm">Yorum Bildirimleri</p>
+                                <p class="text-xs text-gray-600 dark:text-gray-400">Yazılarınıza yorum yapıldığında haberdar olun.</p>
+                            </div>
+                            <label class="inline-flex items-center cursor-pointer">
+                                <input asp-for="CommentNotifications" type="checkbox" class="sr-only peer" />
+                                <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end pt-6 border-t border-gray-200 dark:border-gray-700 mt-6">
+                        <button type="submit"
+                                class="bg-primary text-white font-bold py-3 px-8 rounded-lg hover:bg-primary-dark transition-all shadow-lg shadow-primary/20">
+                            Tercihleri Kaydet
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

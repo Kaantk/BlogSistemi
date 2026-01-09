@@ -1,4 +1,4 @@
-﻿@using Web.Models.ViewModels.User
+﻿@using Web.Models.Common.User
 
 @model UserForLoginViewModel
 
@@ -111,7 +111,7 @@
                                        class="w-4 h-4 text-primary bg-gray-100 border-gray-300 rounded focus:ring-primary focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                 <span class="text-sm text-gray-600 dark:text-gray-400 select-none">Beni Hatırla</span>
                             </label>
-                            <a href="#" class="text-sm font-semibold text-primary hover:text-primary-dark transition-colors">
+                            <a href="@Url.Action("ForgotPassword","Auth")" class="text-sm font-semibold text-primary hover:text-primary-dark transition-colors">
                                 Şifremi Unuttum?
                             </a>
                         </div>
@@ -134,7 +134,7 @@
                         <div class="text-center">
                             <p class="text-sm text-gray-600 dark:text-gray-400">
                                 Hesabınız yok mu?
-                                <a href="@Url.Action("Register", "Account")" class="font-bold text-primary hover:text-primary-dark transition-colors">
+                                <a href="@Url.Action("Register", "Auth")" class="font-bold text-primary hover:text-primary-dark transition-colors">
                                     Hemen Kayıt Olun
                                 </a>
                             </p>

@@ -1,0 +1,160 @@
+﻿@{
+    ViewBag.Title = "Hakkımızda";
+    Layout = "~/Views/Shared/_LayoutPublic.cshtml";
+}
+
+<div class="container mx-auto px-4 lg:px-8 py-8">
+
+    <!-- Breadcrumbs -->
+    <div class="flex items-center gap-2 py-4">
+        <a class="text-gray-500 dark:text-gray-400 text-sm font-medium hover:text-primary flex items-center gap-1 transition-colors"
+           href="@Url.Action("Index", "Home")">
+            <span class="material-symbols-outlined text-sm">home</span>
+            Ana Sayfa
+        </a>
+        <span class="text-gray-400 text-sm">/</span>
+        <span class="text-primary text-sm font-semibold">Hakkımızda</span>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="py-8 md:py-16">
+        <div class="flex flex-col md:flex-row gap-10 items-center">
+            <div class="w-full md:w-1/2 rounded-xl overflow-hidden shadow-2xl">
+                <div class="aspect-video bg-cover bg-center"
+                     style="background-image: url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800');"></div>
+            </div>
+            <div class="w-full md:w-1/2 flex flex-col gap-6">
+                <div class="space-y-4">
+                    <span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider inline-block">
+                        Vizyonumuz
+                    </span>
+                    <h1 class="text-gray-900 dark:text-white text-4xl md:text-5xl font-black leading-tight tracking-tight">
+                        Bilgi Paylaştıkça Çoğalır: <span class="text-primary">İSMEK BLOG</span>
+                    </h1>
+                    <p class="text-gray-600 dark:text-gray-400 text-lg leading-relaxed">
+                        Modern yazılım dünyasından güncel haberler, eğitimler ve deneyimler. MVC mimarisiyle geliştirilen bu platformda teknolojiye dair her şeyi keşfedin. Amacımız, yerel bir girişimden küresel bir bilgi kaynağına dönüşmek.
+                    </p>
+                </div>
+                <div class="flex flex-wrap gap-4">
+                    <a href="@Url.Action("Index", "Home")"
+                       class="bg-primary text-white px-8 py-3 rounded-lg font-bold shadow-lg shadow-primary/20 hover:scale-105 transition-transform">
+                        Yazıları Keşfet
+                    </a>
+                    <a href="@Url.Action("Register", "Auth")"
+                       class="border-2 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white px-8 py-3 rounded-lg font-bold hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                        Bize Katıl
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-12 border-y border-gray-200 dark:border-gray-700 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div class="space-y-2">
+            <div class="text-4xl font-black text-primary">500+</div>
+            <div class="text-sm text-gray-500 dark:text-gray-400 font-medium">Güncel Makale</div>
+        </div>
+        <div class="space-y-2">
+            <div class="text-4xl font-black text-primary">15k+</div>
+            <div class="text-sm text-gray-500 dark:text-gray-400 font-medium">Aylık Okuyucu</div>
+        </div>
+        <div class="space-y-2">
+            <div class="text-4xl font-black text-primary">12</div>
+            <div class="text-sm text-gray-500 dark:text-gray-400 font-medium">Uzman Yazar</div>
+        </div>
+        <div class="space-y-2">
+            <div class="text-4xl font-black text-primary">24/7</div>
+            <div class="text-sm text-gray-500 dark:text-gray-400 font-medium">Aktif Destek</div>
+        </div>
+    </section>
+
+    <!-- Vision & Mission Grid -->
+    <section class="py-16">
+        <h2 class="text-gray-900 dark:text-white text-3xl font-bold mb-10 text-center">
+            Vizyonumuz ve Misyonumuz
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <!-- Vision Card -->
+            <div class="flex flex-col gap-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-surface-light dark:bg-surface-dark p-8 hover:shadow-xl transition-all duration-300 group">
+                <div class="size-12 bg-primary/10 text-primary rounded-lg flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
+                    <span class="material-symbols-outlined text-3xl">visibility</span>
+                </div>
+                <div class="space-y-2">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white">Gelecek Vizyonumuz</h3>
+                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                        Türkiye'de yazılım ve teknoloji eğitimine katkıda bulunan öncü bir dijital kütüphane olmak. Gelişen teknolojileri yerelleştirerek herkes için erişilebilir kılmayı hedefliyoruz.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Mission Card -->
+            <div class="flex flex-col gap-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-surface-light dark:bg-surface-dark p-8 hover:shadow-xl transition-all duration-300 group">
+                <div class="size-12 bg-primary/10 text-primary rounded-lg flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
+                    <span class="material-symbols-outlined text-3xl">flag</span>
+                </div>
+                <div class="space-y-2">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white">Sosyal Misyonumuz</h3>
+                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                        Kaliteli, erişilebilir ve güncel içeriklerle yazılımcı adaylarına rehberlik etmek. MVC mimarisi ve modern web standartlarını kullanarak en iyi kullanıcı deneyimini sunuyoruz.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Author Profile Section -->
+    <section class="py-16 bg-surface-light dark:bg-surface-dark rounded-2xl p-8 md:p-12 mb-16 shadow-sm border border-gray-200 dark:border-gray-700">
+        <div class="flex flex-col md:flex-row items-center gap-10">
+            <div class="relative">
+                <div class="size-48 md:size-64 rounded-full overflow-hidden border-4 border-primary/20 p-2">
+                    <div class="w-full h-full rounded-full bg-cover bg-center shadow-inner"
+                         style="background-image: url('https://ui-avatars.com/api/?name=Kaan+Tetik&background=137fec&color=fff&size=256');"></div>
+                </div>
+                <div class="absolute -bottom-2 -right-2 bg-primary text-white p-3 rounded-full shadow-lg">
+                    <span class="material-symbols-outlined text-xl">verified</span>
+                </div>
+            </div>
+            <div class="flex-1 text-center md:text-left space-y-4">
+                <div>
+                    <h2 class="text-3xl font-black text-gray-900 dark:text-white">Kaan Tetik</h2>
+                    <p class="text-primary font-semibold text-lg">Kurucu & Baş Editör</p>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 text-lg italic leading-relaxed">
+                    "Yazılım geliştirmek sadece kod yazmak değil, bir problemi en estetik ve performanslı şekilde çözme sanatıdır. İSMEK BLOG, bu sanatı icra ederken edindiğim tecrübeleri paylaşma alanım."
+                </p>
+                <div class="flex justify-center md:justify-start gap-4 pt-4">
+                    <a class="text-gray-400 hover:text-primary transition-colors" href="#" title="LinkedIn">
+                        <span class="material-symbols-outlined text-2xl">work</span>
+                    </a>
+                    <a class="text-gray-400 hover:text-primary transition-colors" href="#" title="GitHub">
+                        <span class="material-symbols-outlined text-2xl">code</span>
+                    </a>
+                    <a class="text-gray-400 hover:text-primary transition-colors" href="#" title="Twitter">
+                        <span class="material-symbols-outlined text-2xl">tag</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 text-center">
+        <div class="bg-primary rounded-3xl p-10 md:p-16 text-white relative overflow-hidden">
+            <div class="absolute top-0 right-0 p-4 opacity-10">
+                <span class="material-symbols-outlined" style="font-size: 144px;">forum</span>
+            </div>
+            <h2 class="text-3xl md:text-4xl font-black mb-6 relative z-10">
+                Bize Sormak İstediğiniz Bir Şey Mi Var?
+            </h2>
+            <p class="text-lg opacity-90 mb-10 max-w-2xl mx-auto relative z-10">
+                İster bir geri bildirim, ister bir işbirliği teklifi. Sizden haber almayı çok isteriz.
+            </p>
+            <a class="inline-block bg-white text-primary px-10 py-4 rounded-xl font-bold text-lg hover:shadow-2xl transition-all hover:-translate-y-1"
+               href="@Url.Action("Contact", "Home")">
+                İletişime Geçin
+            </a>
+        </div>
+    </section>
+</div>

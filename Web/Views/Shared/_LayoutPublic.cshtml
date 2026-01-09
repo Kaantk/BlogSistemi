@@ -39,7 +39,9 @@
         }
     </script>
     <style>
-        body { font-family: 'Work Sans', sans-serif; }
+        body {
+            font-family: 'Work Sans', sans-serif;
+        }
     </style>
 
     @RenderSection("Styles", required: false)
@@ -62,17 +64,17 @@
                         </a>
 
                         <!-- Desktop Menu -->
-                        <nav class="hidden md:flex items-center gap-1 ml-4">
-                            <a class="px-4 py-2 text-sm font-semibold text-primary bg-primary/5 rounded-lg" href="@Url.Action("Index", "Home")">Ana Sayfa</a>
-                            <a class="px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all" href="#">Hakkımızda</a>
-                            <a class="px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all" href="#">İletişim</a>
+                        <nav id="navbar" class="hidden md:flex items-center gap-1 ml-4">
+                            <a class="nav-link px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all" href="@Url.Action("Index", "Home")">Ana Sayfa</a>
+                            <a class="nav-link px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all" href="@Url.Action("About", "Home")">Hakkımızda</a>
+                            <a class="nav-link px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all" href="@Url.Action("Contact", "Home")">İletişim</a>
                         </nav>
                     </div>
 
                     <!-- Search & Auth -->
                     <div class="flex items-center gap-2 sm:gap-4">
                         <div class="hidden sm:flex items-center border-r border-gray-200 dark:border-gray-700 pr-4">
-                            <button class="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-white transition-colors">
+                            <button class="search-button text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-white transition-colors">
                                 <span class="material-symbols-outlined text-[24px]">search</span>
                             </button>
                         </div>
@@ -81,22 +83,67 @@
                         {
                             <!-- Kullanıcı Giriş Yapmış -->
                             <div class="flex items-center gap-3">
-                                <a class="flex items-center gap-3 pl-1 pr-3 py-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all border border-transparent hover:border-gray-200 dark:hover:border-gray-700 group"
-                                   href="@Url.Action("Profile", "Account")">
-                                    <div class="relative">
-                                        <img alt="@User.Identity.Name"
-                                             class="w-8 h-8 rounded-full object-cover border border-gray-200 dark:border-gray-700 shadow-sm"
-                                             src="@(ViewBag.UserAvatar ?? "https://ui-avatars.com/api/?name=" + User.Identity.Name + "&background=137fec&color=fff")" />
-                                        <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-white dark:border-background-dark rounded-full"></span>
+                                <!-- Profile Dropdown -->
+                                <div class="relative">
+                                    <button onclick="toggleDropdown()"
+                                            class="flex items-center gap-3 pl-1 pr-3 py-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all border border-transparent hover:border-gray-200 dark:hover:border-gray-700 group">
+                                        <div class="relative">
+                                            <img alt="@User.Identity.Name"
+                                                 class="w-8 h-8 rounded-full object-cover border border-gray-200 dark:border-gray-700 shadow-sm"
+                                                 src="@(ViewBag.UserAvatar ?? "https://ui-avatars.com/api/?name=" + User.Identity.Name + "&background=137fec&color=fff")" />
+                                            <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-white dark:border-background-dark rounded-full"></span>
+                                        </div>
+                                        <span class="text-sm font-bold text-gray-700 dark:text-gray-200 group-hover:text-primary transition-colors hidden sm:block">@User.Identity.Name</span>
+                                        <span class="material-symbols-outlined text-gray-400 text-[16px] transition-transform" id="dropdownIcon">expand_more</span>
+                                    </button>
+
+                                    <!-- Dropdown Menu -->
+                                    <div id="dropdownMenu"
+                                         class="hidden absolute right-0 mt-2 w-56 bg-white dark:bg-surface-dark rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 py-2 z-50">
+
+                                        <!-- User Info -->
+                                        <div class="px-4 py-3 border-b border-gray-100 dark:border-gray-700">
+                                            <p class="text-sm font-bold text-gray-900 dark:text-white truncate">@User.Identity.Name</p>
+                                            <p class="text-xs text-gray-500 dark:text-gray-400 truncate mt-1">@(ViewBag.UserEmail ?? User.Identity.Name)</p>
+                                        </div>
+
+                                        <!-- Menu Items -->
+                                        <div class="py-1">
+                                            <a href="@Url.Action("Profile", "Account")"
+                                               class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                                                <span class="material-symbols-outlined text-[20px] text-gray-400">person</span>
+                                                <span class="font-medium">Profilim</span>
+                                            </a>
+                                            <a href="@Url.Action("Settings", "Account")"
+                                               class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                                                <span class="material-symbols-outlined text-[20px] text-gray-400">settings</span>
+                                                <span class="font-medium">Ayarlar</span>
+                                            </a>
+                                            <a href="#"
+                                               class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                                                <span class="material-symbols-outlined text-[20px] text-gray-400">article</span>
+                                                <span class="font-medium">Yazılarım</span>
+                                            </a>
+                                            <a href="@Url.Action("Favorites", "Account")"
+                                               class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                                                <span class="material-symbols-outlined text-[20px] text-gray-400">bookmark</span>
+                                                <span class="font-medium">Favorilerim</span>
+                                            </a>
+                                        </div>
+
+                                        <!-- Divider -->
+                                        <div class="border-t border-gray-100 dark:border-gray-700 my-1"></div>
+
+                                        <!-- Logout -->
+                                        <div class="py-1">
+                                            <a href="@Url.Action("Logout", "Auth")"
+                                               class="flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors">
+                                                <span class="material-symbols-outlined text-[20px]">logout</span>
+                                                <span class="font-medium">Çıkış Yap</span>
+                                            </a>
+                                        </div>
                                     </div>
-                                    <span class="text-sm font-bold text-gray-700 dark:text-gray-200 group-hover:text-primary transition-colors hidden sm:block">@User.Identity.Name</span>
-                                </a>
-                                <a class="flex items-center gap-2 text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/10 px-3 py-2 rounded-lg transition-colors text-sm font-medium"
-                                   href="@Url.Action("Logout", "Auth")"
-                                   title="Oturumu Sonlandır">
-                                    <span class="material-symbols-outlined text-[20px]">logout</span>
-                                    <span class="hidden lg:inline">Çıkış Yap</span>
-                                </a>
+                                </div>
                             </div>
                         }
                         else
@@ -148,8 +195,8 @@
                         <h4 class="font-bold text-gray-900 dark:text-white mb-4">Hızlı Bağlantılar</h4>
                         <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
                             <li><a class="hover:text-primary transition-colors" href="@Url.Action("Index", "Home")">Ana Sayfa</a></li>
-                            <li><a class="hover:text-primary transition-colors" href="#">Hakkımızda</a></li>
-                            <li><a class="hover:text-primary transition-colors" href="#">İletişim</a></li>
+                            <li><a class="hover:text-primary transition-colors" href="@Url.Action("About", "Home")">Hakkımızda</a></li>
+                            <li><a class="hover:text-primary transition-colors" href="@Url.Action("Contact", "Home")">İletişim</a></li>
                             <li><a class="hover:text-primary transition-colors" href="#">Kullanım Şartları</a></li>
                         </ul>
                     </div>
@@ -166,7 +213,7 @@
 
                     <div>
                         <h4 class="font-bold text-gray-900 dark:text-white mb-4">Admin</h4>
-                        <a class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-primary transition-colors mb-2" href="@Url.Action("Login", "Admin")">
+                        <a class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-primary transition-colors mb-2" href="@Url.Action("Index", "Dashboard")">
                             <span class="material-symbols-outlined text-sm">admin_panel_settings</span>
                             Yönetici Girişi
                         </a>
@@ -180,13 +227,68 @@
         </footer>
     </div>
 
-    <!-- Mobile Menu Button (Hidden logic, visual only for layout) -->
+    <!-- Mobile Menu Button -->
     <div class="fixed bottom-6 right-6 z-50 md:hidden">
-        <button class="bg-primary text-white p-4 rounded-full shadow-lg shadow-primary/40 flex items-center justify-center">
+        <button class="mobile-menu-button bg-primary text-white p-4 rounded-full shadow-lg shadow-primary/40 flex items-center justify-center">
             <span class="material-symbols-outlined">menu</span>
         </button>
     </div>
 
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
     @RenderSection("Scripts", required: false)
+
+    <!-- Main Layout Scripts -->
+    <script>
+        $(document).ready(function() {
+            // Dropdown toggle function
+            window.toggleDropdown = function() {
+                $('#dropdownMenu').toggleClass('hidden');
+                const isHidden = $('#dropdownMenu').hasClass('hidden');
+                $('#dropdownIcon').css('transform', isHidden ? 'rotate(0deg)' : 'rotate(180deg)');
+            };
+
+            // Close dropdown when clicking outside
+            $(document).on('click', function(event) {
+                const $menu = $('#dropdownMenu');
+                const $button = $(event.target).closest('button[onclick="toggleDropdown()"]');
+
+                if ($menu.length && !$menu.hasClass('hidden') &&
+                    !$menu.is(event.target) && !$menu.has(event.target).length &&
+                    $button.length === 0) {
+                    $menu.addClass('hidden');
+                    $('#dropdownIcon').css('transform', 'rotate(0deg)');
+                }
+            });
+
+            // Active navigation link
+            const currentPath = window.location.pathname;
+            $('.nav-link').each(function() {
+                const linkPath = $(this).attr('href');
+                if (currentPath === linkPath || (linkPath !== '/' && currentPath.startsWith(linkPath))) {
+                    $(this).removeClass('text-gray-600 dark:text-gray-300')
+                           .addClass('text-primary bg-primary/5 font-semibold');
+                }
+            });
+
+            // Search button click handler
+            $('.search-button').on('click', function() {
+                // Buraya arama modalı kodları gelecek
+                console.log('Arama butonuna tıklandı');
+            });
+
+            // Smooth scroll
+            $('a[href^="#"]').on('click', function(e) {
+                const target = $(this.getAttribute('href'));
+                if (target.length) {
+                    e.preventDefault();
+                    $('html, body').stop().animate({
+                        scrollTop: target.offset().top - 80
+                    }, 500);
+                }
+            });
+        });
+    </script>
 </body>
 </html>

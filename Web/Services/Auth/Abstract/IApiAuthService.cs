@@ -1,5 +1,5 @@
 ﻿using Web.Models.Common;
-using Web.Models.ViewModels.User;
+using Web.Models.Common.User;
 
 namespace Web.Services.Auth.Abstract
 {

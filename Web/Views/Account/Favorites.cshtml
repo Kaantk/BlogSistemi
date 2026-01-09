@@ -1,0 +1,253 @@
+﻿@{
+    ViewBag.Title = "Favorilerim";
+    Layout = "~/Views/Shared/_LayoutPublic.cshtml";
+}
+
+<div class="container mx-auto px-4 lg:px-8 py-8 max-w-[1200px]">
+
+    <!-- Breadcrumbs -->
+    <nav class="flex flex-wrap gap-2 mb-6">
+        <a class="text-gray-600 dark:text-gray-400 text-sm font-medium hover:text-primary transition-colors"
+           href="@Url.Action("Profile", "Account")">Profilim</a>
+        <span class="text-gray-600 text-sm">/</span>
+        <a class="text-gray-600 dark:text-gray-400 text-sm font-medium hover:text-primary transition-colors"
+           href="@Url.Action("Settings", "Account")">Ayarlar</a>
+        <span class="text-gray-600 text-sm">/</span>
+        <span class="text-primary text-sm font-semibold">Favorilerim</span>
+    </nav>
+
+    <!-- Page Heading -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-8">
+        <div class="flex flex-col gap-2">
+            <h1 class="text-gray-900 dark:text-white text-4xl md:text-5xl font-black leading-tight">
+                Favorilerim
+            </h1>
+            <p class="text-gray-600 dark:text-gray-400 text-lg">
+                Kaydettiğiniz ve daha sonra okumak istediğiniz içerikler.
+            </p>
+        </div>
+        <div class="flex gap-3">
+            <a href="@Url.Action("Index", "Home")"
+               class="flex items-center justify-center gap-2 rounded-lg h-11 px-6 bg-primary text-white text-sm font-bold transition-all hover:bg-primary-dark shadow-lg shadow-primary/20">
+                <span class="material-symbols-outlined text-lg">explore</span>
+                <span>Yeni Bloglar Keşfet</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Tabs & Filters -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-gray-200 dark:border-gray-700 mb-8">
+        <div class="flex gap-8 overflow-x-auto">
+            <a class="flex flex-col items-center justify-center border-b-[3px] border-primary text-primary pb-3 pt-4 whitespace-nowrap"
+               href="#">
+                <p class="text-sm font-bold">Tüm Yazılar (12)</p>
+            </a>
+            <a class="flex flex-col items-center justify-center border-b-[3px] border-transparent text-gray-600 dark:text-gray-400 pb-3 pt-4 whitespace-nowrap hover:text-primary transition-colors"
+               href="#">
+                <p class="text-sm font-bold">Teknoloji</p>
+            </a>
+            <a class="flex flex-col items-center justify-center border-b-[3px] border-transparent text-gray-600 dark:text-gray-400 pb-3 pt-4 whitespace-nowrap hover:text-primary transition-colors"
+               href="#">
+                <p class="text-sm font-bold">Tasarım</p>
+            </a>
+            <a class="flex flex-col items-center justify-center border-b-[3px] border-transparent text-gray-600 dark:text-gray-400 pb-3 pt-4 whitespace-nowrap hover:text-primary transition-colors"
+               href="#">
+                <p class="text-sm font-bold">Yazılım</p>
+            </a>
+        </div>
+        <div class="py-4 md:py-0">
+            <button class="flex items-center gap-2 text-sm font-medium text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-700 px-3 py-1.5 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                <span class="material-symbols-outlined text-lg">sort</span>
+                Sırala: En Yeni
+            </button>
+        </div>
+    </div>
+
+    <!-- Favorites Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- Card 1 -->
+        <article class="group flex flex-col bg-surface-light dark:bg-surface-dark rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 transition-all hover:shadow-xl hover:-translate-y-1">
+            <div class="relative w-full h-48 bg-center bg-cover overflow-hidden"
+                 style="background-image: url('https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=600');">
+                <div class="absolute top-3 left-3 bg-primary text-white text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded">
+                    TASARIM
+                </div>
+            </div>
+            <div class="p-5 flex flex-col flex-1">
+                <h3 class="text-gray-900 dark:text-white text-xl font-bold leading-snug mb-2 group-hover:text-primary transition-colors">
+                    Modern Web Tasarım Trendleri
+                </h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-4 flex-1">
+                    2024 yılında öne çıkan UI/UX yaklaşımları, karanlık mod optimizasyonu ve minimalizm...
+                </p>
+                <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 dark:border-gray-800">
+                    <span class="text-gray-600 dark:text-gray-400 text-xs font-medium flex items-center gap-1">
+                        <span class="material-symbols-outlined text-sm">calendar_today</span>
+                        12 Ekim 2023
+                    </span>
+                    <button class="flex items-center gap-1 text-red-500 hover:text-red-700 text-xs font-bold transition-colors">
+                        <span class="material-symbols-outlined text-lg">heart_minus</span>
+                        Kaldır
+                    </button>
+                </div>
+            </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="group flex flex-col bg-surface-light dark:bg-surface-dark rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 transition-all hover:shadow-xl hover:-translate-y-1">
+            <div class="relative w-full h-48 bg-center bg-cover overflow-hidden"
+                 style="background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600');">
+                <div class="absolute top-3 left-3 bg-blue-600 text-white text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded">
+                    YAZILIM
+                </div>
+            </div>
+            <div class="p-5 flex flex-col flex-1">
+                <h3 class="text-gray-900 dark:text-white text-xl font-bold leading-snug mb-2 group-hover:text-primary transition-colors">
+                    MVC ile Web Geliştirme
+                </h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-4 flex-1">
+                    Modern yazılım mimarilerinde MVC yapısının önemi, Controller ve View arasındaki denge...
+                </p>
+                <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 dark:border-gray-800">
+                    <span class="text-gray-600 dark:text-gray-400 text-xs font-medium flex items-center gap-1">
+                        <span class="material-symbols-outlined text-sm">calendar_today</span>
+                        15 Kasım 2023
+                    </span>
+                    <button class="flex items-center gap-1 text-red-500 hover:text-red-700 text-xs font-bold transition-colors">
+                        <span class="material-symbols-outlined text-lg">heart_minus</span>
+                        Kaldır
+                    </button>
+                </div>
+            </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="group flex flex-col bg-surface-light dark:bg-surface-dark rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 transition-all hover:shadow-xl hover:-translate-y-1">
+            <div class="relative w-full h-48 bg-center bg-cover overflow-hidden"
+                 style="background-image: url('https://images.unsplash.com/photo-1523437113738-bbd3cc89fb19?w=600');">
+                <div class="absolute top-3 left-3 bg-purple-600 text-white text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded">
+                    FRONTEND
+                </div>
+            </div>
+            <div class="p-5 flex flex-col flex-1">
+                <h3 class="text-gray-900 dark:text-white text-xl font-bold leading-snug mb-2 group-hover:text-primary transition-colors">
+                    Bootstrap 5 İpuçları
+                </h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-4 flex-1">
+                    Daha hızlı ve etkili web siteleri tasarlamak için Bootstrap rehberi ve hazır bileşenler...
+                </p>
+                <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 dark:border-gray-800">
+                    <span class="text-gray-600 dark:text-gray-400 text-xs font-medium flex items-center gap-1">
+                        <span class="material-symbols-outlined text-sm">calendar_today</span>
+                        20 Aralık 2023
+                    </span>
+                    <button class="flex items-center gap-1 text-red-500 hover:text-red-700 text-xs font-bold transition-colors">
+                        <span class="material-symbols-outlined text-lg">heart_minus</span>
+                        Kaldır
+                    </button>
+                </div>
+            </div>
+        </article>
+
+        <!-- Card 4 -->
+        <article class="group flex flex-col bg-surface-light dark:bg-surface-dark rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 transition-all hover:shadow-xl hover:-translate-y-1">
+            <div class="relative w-full h-48 bg-center bg-cover overflow-hidden"
+                 style="background-image: url('https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600');">
+                <div class="absolute top-3 left-3 bg-orange-600 text-white text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded">
+                    TEKNOLOJİ
+                </div>
+            </div>
+            <div class="p-5 flex flex-col flex-1">
+                <h3 class="text-gray-900 dark:text-white text-xl font-bold leading-snug mb-2 group-hover:text-primary transition-colors">
+                    Yapay Zeka ve Gelecek
+                </h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-4 flex-1">
+                    Üretken yapay zekanın blog yazarlığı ve içerik üretimi üzerindeki devrim niteliğindeki etkileri...
+                </p>
+                <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 dark:border-gray-800">
+                    <span class="text-gray-600 dark:text-gray-400 text-xs font-medium flex items-center gap-1">
+                        <span class="material-symbols-outlined text-sm">calendar_today</span>
+                        05 Ocak 2024
+                    </span>
+                    <button class="flex items-center gap-1 text-red-500 hover:text-red-700 text-xs font-bold transition-colors">
+                        <span class="material-symbols-outlined text-lg">heart_minus</span>
+                        Kaldır
+                    </button>
+                </div>
+            </div>
+        </article>
+
+        <!-- Card 5 -->
+        <article class="group flex flex-col bg-surface-light dark:bg-surface-dark rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 transition-all hover:shadow-xl hover:-translate-y-1">
+            <div class="relative w-full h-48 bg-center bg-cover overflow-hidden"
+                 style="background-image: url('https://images.unsplash.com/photo-1563206767-5b18f218e8de?w=600');">
+                <div class="absolute top-3 left-3 bg-green-600 text-white text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded">
+                    GÜVENLİK
+                </div>
+            </div>
+            <div class="p-5 flex flex-col flex-1">
+                <h3 class="text-gray-900 dark:text-white text-xl font-bold leading-snug mb-2 group-hover:text-primary transition-colors">
+                    Web Uygulama Güvenliği
+                </h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-4 flex-1">
+                    OWASP Top 10 ve modern web uygulamalarını siber saldırılara karşı koruma yöntemleri...
+                </p>
+                <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 dark:border-gray-800">
+                    <span class="text-gray-600 dark:text-gray-400 text-xs font-medium flex items-center gap-1">
+                        <span class="material-symbols-outlined text-sm">calendar_today</span>
+                        18 Şubat 2024
+                    </span>
+                    <button class="flex items-center gap-1 text-red-500 hover:text-red-700 text-xs font-bold transition-colors">
+                        <span class="material-symbols-outlined text-lg">heart_minus</span>
+                        Kaldır
+                    </button>
+                </div>
+            </div>
+        </article>
+
+        <!-- Card 6 -->
+        <article class="group flex flex-col bg-surface-light dark:bg-surface-dark rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 transition-all hover:shadow-xl hover:-translate-y-1">
+            <div class="relative w-full h-48 bg-center bg-cover overflow-hidden"
+                 style="background-image: url('https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=600');">
+                <div class="absolute top-3 left-3 bg-primary text-white text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded">
+                    GENEL
+                </div>
+            </div>
+            <div class="p-5 flex flex-col flex-1">
+                <h3 class="text-gray-900 dark:text-white text-xl font-bold leading-snug mb-2 group-hover:text-primary transition-colors">
+                    İSMEK ile Kariyer Yolculuğu
+                </h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-4 flex-1">
+                    Eğitimden profesyonel hayata geçiş sürecinde blog yazmanın ve portfolyo oluşturmanın gücü...
+                </p>
+                <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 dark:border-gray-800">
+                    <span class="text-gray-600 dark:text-gray-400 text-xs font-medium flex items-center gap-1">
+                        <span class="material-symbols-outlined text-sm">calendar_today</span>
+                        02 Mart 2024
+                    </span>
+                    <button class="flex items-center gap-1 text-red-500 hover:text-red-700 text-xs font-bold transition-colors">
+                        <span class="material-symbols-outlined text-lg">heart_minus</span>
+                        Kaldır
+                    </button>
+                </div>
+            </div>
+        </article>
+    </div>
+
+    <!-- Pagination -->
+    <div class="flex items-center justify-center gap-2 mt-12 pb-20">
+        <button class="size-10 flex items-center justify-center rounded-lg border border-gray-200 dark:border-gray-700 text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+            <span class="material-symbols-outlined">chevron_left</span>
+        </button>
+        <button class="size-10 flex items-center justify-center rounded-lg bg-primary text-white font-bold shadow-md shadow-primary/20">
+            1
+        </button>
+        <button class="size-10 flex items-center justify-center rounded-lg border border-gray-200 dark:border-gray-700 text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+            2
+        </button>
+        <button class="size-10 flex items-center justify-center rounded-lg border border-gray-200 dark:border-gray-700 text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+            <span class="material-symbols-outlined">chevron_right</span>
+        </button>
+    </div>
+</div>

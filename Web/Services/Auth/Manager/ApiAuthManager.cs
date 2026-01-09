@@ -1,6 +1,6 @@
 ﻿using Entities.Dtos.User;
 using Web.Models.Common;
-using Web.Models.ViewModels.User;
+using Web.Models.Common.User;
 using Web.Services.Auth.Abstract;
 
 namespace Web.Services.Auth.Manager

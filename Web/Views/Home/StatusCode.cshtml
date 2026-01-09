@@ -1,0 +1,140 @@
+﻿@{
+    var statusCode = ViewBag.StatusCode ?? 404;
+    ViewBag.Title = statusCode == 404 ? "Sayfa Bulunamadı" : $"Hata {statusCode}";
+    Layout = "~/Views/Shared/_LayoutPublic.cshtml";
+}
+
+<!-- Main Content (Error Section) -->
+<main class="flex-1 flex flex-col items-center justify-center px-6 py-12 md:py-24">
+    <div class="max-w-[800px] w-full text-center space-y-8">
+
+        <!-- Error Code Illustration -->
+        <div class="relative inline-block">
+            <h1 class="text-primary tracking-tighter text-[120px] md:text-[180px] font-extrabold leading-none opacity-20 select-none">
+                @statusCode
+            </h1>
+            <div class="absolute inset-0 flex items-center justify-center">
+                <span class="material-symbols-outlined text-[100px] md:text-[140px] text-primary opacity-80">
+                    @(statusCode == 404 ? "sentiment_dissatisfied" :
+                                        statusCode == 403 ? "lock" :
+                                        statusCode == 500 ? "error_outline" : "warning")
+                </span>
+            </div>
+        </div>
+
+        <!-- Headline Message -->
+        <div class="space-y-4">
+            <h2 class="text-gray-900 dark:text-white text-3xl md:text-4xl font-bold leading-tight px-4">
+                @ViewBag.Message
+            </h2>
+            <p class="text-gray-600 dark:text-gray-400 text-lg font-normal leading-relaxed max-w-2xl mx-auto px-4">
+                @ViewBag.Description
+            </p>
+        </div>
+
+        @if (statusCode == 404)
+        {
+            <!-- Actionable Search Bar -->
+            <div class="max-w-xl mx-auto px-4">
+                <form action="@Url.Action("Search", "Home")" method="get" class="bg-white dark:bg-gray-900 p-2 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800">
+                    <label class="flex items-center h-14 w-full">
+                        <div class="text-gray-600 dark:text-gray-400 px-4">
+                            <span class="material-symbols-outlined">search</span>
+                        </div>
+                        <input name="q"
+                               class="form-input flex-1 border-none bg-transparent text-gray-900 dark:text-white focus:outline-0 focus:ring-0 h-full placeholder:text-gray-500 text-base"
+                               placeholder="Blogda bir şeyler arayın..." />
+                        <button type="submit"
+                                class="bg-primary text-white px-6 h-full rounded-lg font-semibold hover:bg-primary-dark transition-colors">
+                            Ara
+                        </button>
+                    </label>
+                </form>
+            </div>
+        }
+
+        <!-- Navigation Buttons -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
+            <a class="flex items-center gap-2 min-w-[200px] justify-center rounded-xl h-14 px-6 bg-primary text-white font-bold text-base shadow-lg shadow-primary/20 hover:-translate-y-0.5 hover:bg-primary-dark transition-all"
+               href="@Url.Action("Index", "Home")">
+                <span class="material-symbols-outlined">home</span>
+                Ana Sayfaya Dön
+            </a>
+
+            @if (statusCode == 404)
+            {
+                <a class="flex items-center gap-2 min-w-[200px] justify-center rounded-xl h-14 px-6 bg-white dark:bg-gray-800 text-primary dark:text-white border-2 border-primary/20 dark:border-gray-700 font-bold text-base hover:bg-primary/5 dark:hover:bg-gray-700 transition-all"
+                   href="@Url.Action("Index", "Post")">
+                    <span class="material-symbols-outlined">article</span>
+                    Blog Yazıları
+                </a>
+            }
+            else if (!User.Identity.IsAuthenticated && statusCode == 403)
+            {
+                <a class="flex items-center gap-2 min-w-[200px] justify-center rounded-xl h-14 px-6 bg-white dark:bg-gray-800 text-primary dark:text-white border-2 border-primary/20 dark:border-gray-700 font-bold text-base hover:bg-primary/5 dark:hover:bg-gray-700 transition-all"
+                   href="@Url.Action("Login", "Auth")">
+                    <span class="material-symbols-outlined">login</span>
+                    Giriş Yap
+                </a>
+            }
+            else
+            {
+                <button onclick="history.back()"
+                        class="flex items-center gap-2 min-w-[200px] justify-center rounded-xl h-14 px-6 bg-white dark:bg-gray-800 text-primary dark:text-white border-2 border-primary/20 dark:border-gray-700 font-bold text-base hover:bg-primary/5 dark:hover:bg-gray-700 transition-all">
+                    <span class="material-symbols-outlined">arrow_back</span>
+                    Geri Dön
+                </button>
+            }
+        </div>
+    </div>
+</main>
+
+@if (statusCode == 404)
+{
+    <!-- Featured Section Suggestion -->
+    <section class="bg-white dark:bg-surface-dark py-16 border-t border-gray-200 dark:border-gray-800">
+        <div class="max-w-6xl mx-auto px-6">
+            <h3 class="text-xl font-bold mb-8 text-center md:text-left text-gray-900 dark:text-white">
+                Belki bunlar ilginizi çekebilir:
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                <!-- Suggestion Card 1 -->
+                <a href="@Url.Action("Category", "Post", new { slug = "tasarim" })"
+                   class="group bg-background-light dark:bg-background-dark p-6 rounded-xl border border-transparent hover:border-primary/30 transition-all cursor-pointer">
+                    <div class="w-12 h-12 bg-primary/10 text-primary rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
+                        <span class="material-symbols-outlined">palette</span>
+                    </div>
+                    <h4 class="font-bold text-lg mb-2 text-gray-900 dark:text-white">Sanat ve Tasarım</h4>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                        Yaratıcılığınızı geliştirecek en yeni blog yazılarımızı inceleyin.
+                    </p>
+                </a>
+
+                <!-- Suggestion Card 2 -->
+                <a href="@Url.Action("Category", "Post", new { slug = "yazilim" })"
+                   class="group bg-background-light dark:bg-background-dark p-6 rounded-xl border border-transparent hover:border-primary/30 transition-all cursor-pointer">
+                    <div class="w-12 h-12 bg-primary/10 text-primary rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
+                        <span class="material-symbols-outlined">code</span>
+                    </div>
+                    <h4 class="font-bold text-lg mb-2 text-gray-900 dark:text-white">Bilişim Teknolojileri</h4>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                        Yazılım dünyasındaki trendleri ve eğitim rehberlerini keşfedin.
+                    </p>
+                </a>
+
+                <!-- Suggestion Card 3 -->
+                <a href="@Url.Action("Category", "Post", new { slug = "egitim" })"
+                   class="group bg-background-light dark:bg-background-dark p-6 rounded-xl border border-transparent hover:border-primary/30 transition-all cursor-pointer">
+                    <div class="w-12 h-12 bg-primary/10 text-primary rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
+                        <span class="material-symbols-outlined">school</span>
+                    </div>
+                    <h4 class="font-bold text-lg mb-2 text-gray-900 dark:text-white">Eğitim ve Gelişim</h4>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                        Kendinizi geliştirmeniz için ipuçları ve öneriler blogumuzda.
+                    </p>
+                </a>
+            </div>
+        </div>
+    </section>
+}
