@@ -1,5 +1,6 @@
 ﻿using Core.Utilities.Results;
-using Entities.Dtos.User;
+using Entities.Dtos.Auth.Request;
+using Entities.Dtos.Auth.Response;
 
 namespace Business.Abstract
 {

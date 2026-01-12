@@ -12,7 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\ViewModels\Account\" />
+    <Folder Include="Models\Account\Response\" />
+    <Folder Include="Models\Account\Request\" />
+    <Folder Include="Models\Admin\Response\" />
   </ItemGroup>
 
 </Project>

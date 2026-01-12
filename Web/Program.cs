@@ -3,8 +3,6 @@ using DataAccess.Concrete.EntityFramework.Contexts;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Web.Services.Auth.Abstract;
-using Web.Services.Auth.Manager;
 
 namespace Web
 {
@@ -46,10 +44,6 @@ namespace Web
             {
                 client.BaseAddress = new Uri("https://localhost:7043/api/");
             });
-
-            // DI (Web Services)
-            builder.Services.AddScoped<IApiAuthService, ApiAuthManager>();
-            builder.Services.AddScoped<IAuthSessionService, AuthSessionManager>();
 
             builder.Services.AddHttpContextAccessor();
 

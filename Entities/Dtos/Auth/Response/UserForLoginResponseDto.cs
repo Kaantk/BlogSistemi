@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities.Dtos.User
+namespace Entities.Dtos.Auth.Response
 {
     public class UserForLoginResponseDto
     {

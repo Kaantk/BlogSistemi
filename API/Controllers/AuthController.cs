@@ -1,8 +1,9 @@
 ﻿
 
 using Business.Abstract;
+using Entities.Dtos.Auth.Request;
+using Entities.Dtos.Auth.Response;
 using Entities.Dtos.Common;
-using Entities.Dtos.User;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers

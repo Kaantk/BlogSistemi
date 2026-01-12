@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Web.Models.Common.User
+namespace Web.Models.Auth.Request
 {
     public class UserForLoginViewModel
     {

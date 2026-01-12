@@ -1,0 +1,184 @@
+﻿@{
+    ViewBag.Title = "- Site Ayarları";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<!-- Page Header -->
+<div class="flex flex-col gap-2 mb-6">
+    <div class="flex items-center gap-2 text-sm">
+        <a class="text-[#617589] dark:text-[#94a3b8] hover:text-primary transition-colors" href="@Url.Action("Index", "Admin")">Yönetici</a>
+        <span class="text-[#617589] dark:text-[#94a3b8]">/</span>
+        <span class="text-[#111418] dark:text-white font-medium">Site Ayarları</span>
+    </div>
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+            <h1 class="text-[#111418] dark:text-white text-3xl font-bold">Site Genel Ayarları</h1>
+            <p class="text-[#617589] dark:text-[#94a3b8] mt-1">Web sitenizin temel konfigürasyonlarını buradan yönetebilirsiniz.</p>
+        </div>
+        <div class="flex items-center gap-3">
+            <button class="px-4 py-2 rounded-lg border border-[#e5e7eb] dark:border-[#2d3b4a] text-[#111418] dark:text-white text-sm font-medium hover:bg-[#f0f2f4] dark:hover:bg-[#24303c] transition-colors">
+                Vazgeç
+            </button>
+            <button class="flex items-center gap-2 px-6 py-2 rounded-lg bg-primary hover:bg-primary-dark text-white text-sm font-bold shadow-lg shadow-primary/20 transition-all">
+                <span class="material-symbols-outlined text-[18px]">save</span>
+                Değişiklikleri Kaydet
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Tabs Navigation -->
+<div class="flex overflow-x-auto border-b border-[#e5e7eb] dark:border-[#2d3b4a] mb-8 no-scrollbar">
+    <button class="whitespace-nowrap px-6 py-4 font-semibold text-sm border-b-2 border-primary text-primary transition-all flex items-center gap-2">
+        <span class="material-symbols-outlined text-[20px]">tune</span> Genel Bilgiler
+    </button>
+    <button class="whitespace-nowrap px-6 py-4 font-medium text-[#617589] dark:text-[#94a3b8] text-sm hover:text-primary transition-all flex items-center gap-2">
+        <span class="material-symbols-outlined text-[20px]">alternate_email</span> İletişim & Konum
+    </button>
+    <button class="whitespace-nowrap px-6 py-4 font-medium text-[#617589] dark:text-[#94a3b8] text-sm hover:text-primary transition-all flex items-center gap-2">
+        <span class="material-symbols-outlined text-[20px]">share</span> Sosyal Medya
+    </button>
+    <button class="whitespace-nowrap px-6 py-4 font-medium text-[#617589] dark:text-[#94a3b8] text-sm hover:text-primary transition-all flex items-center gap-2">
+        <span class="material-symbols-outlined text-[20px]">search</span> SEO & Analitik
+    </button>
+</div>
+
+<!-- Form Sections -->
+<div class="space-y-8">
+    <!-- Basic Information Card -->
+    <div class="bg-white dark:bg-[#1a2632] rounded-xl border border-[#e5e7eb] dark:border-[#2d3b4a] overflow-hidden shadow-sm">
+        <div class="p-6 border-b border-[#f0f2f4] dark:border-[#2d3b4a] bg-[#f8f9fa] dark:bg-[#1e293b]">
+            <h3 class="font-bold text-lg flex items-center gap-2 text-[#111418] dark:text-white">
+                <span class="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+                    <span class="material-symbols-outlined text-[18px]">info</span>
+                </span>
+                Temel Site Bilgileri
+            </h3>
+        </div>
+        <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-semibold text-[#111418] dark:text-white mb-1.5">Site Başlığı (Title)</label>
+                    <input class="w-full bg-[#f0f2f4] dark:bg-[#24303c] border-[#e5e7eb] dark:border-[#2d3b4a] rounded-lg px-4 py-2.5 focus:ring-primary focus:border-primary text-sm text-[#111418] dark:text-white" type="text" value="İSMEK BLOG - Geleceğin Eğitim Portalı" />
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-[#111418] dark:text-white mb-1.5">Site Sloganı (Tagline)</label>
+                    <input class="w-full bg-[#f0f2f4] dark:bg-[#24303c] border-[#e5e7eb] dark:border-[#2d3b4a] rounded-lg px-4 py-2.5 focus:ring-primary focus:border-primary text-sm text-[#111418] dark:text-white" type="text" value="Kendini Geliştir, Geleceği Değiştir" />
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-[#111418] dark:text-white mb-1.5">Admin E-posta</label>
+                    <input class="w-full bg-[#f0f2f4] dark:bg-[#24303c] border-[#e5e7eb] dark:border-[#2d3b4a] rounded-lg px-4 py-2.5 focus:ring-primary focus:border-primary text-sm text-[#111418] dark:text-white" type="email" value="admin@ismek.org" />
+                </div>
+            </div>
+            <div class="space-y-6">
+                <div class="flex flex-col sm:flex-row gap-6 items-start">
+                    <div class="flex-1">
+                        <label class="block text-sm font-semibold text-[#111418] dark:text-white mb-1.5">Site Logosu</label>
+                        <div class="border-2 border-dashed border-[#e5e7eb] dark:border-[#2d3b4a] rounded-xl p-4 flex flex-col items-center justify-center bg-[#f8f9fa] dark:bg-[#1e293b] hover:bg-[#f0f2f4] dark:hover:bg-[#24303c] transition-all cursor-pointer">
+                            <span class="material-symbols-outlined text-[#617589] dark:text-[#94a3b8] text-3xl mb-2">cloud_upload</span>
+                            <p class="text-[11px] text-[#617589] dark:text-[#94a3b8] text-center">PNG, JPG (Max. 2MB)</p>
+                            <input class="hidden" type="file" />
+                        </div>
+                    </div>
+                    <div class="w-32">
+                        <p class="text-[10px] font-bold text-[#617589] dark:text-[#94a3b8] uppercase mb-2">Mevcut Logo</p>
+                        <div class="h-24 bg-[#f0f2f4] dark:bg-[#24303c] rounded-xl flex items-center justify-center p-2 border border-[#e5e7eb] dark:border-[#2d3b4a]">
+                            <img alt="Logo" class="max-h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC68yJpdrKyQBY8xosa5Ygwv_mWsZC4yuqJc4TqwvZcA02UeaiZxbt4LaRMKhp-_A-4P6RLiyi83Jcx8kE8egWBKL4TXtFbIaFjxqx7E2DWhds9_EsSjQCaymmwYPWITNfkjxmuhBHvUv5qAV-nc7C9mJoqXAobVcyyQPLnx8YolQNK62ZFzpuEb0stgRoxl0KfSnRG3DfnBrMCVUMf8OlBraOTm4X1mfWuPinII4syMzQoA1_3ttBW0xBYU9tRCL7CWTERwkPcH_M" />
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-6 items-start">
+                    <div class="flex-1">
+                        <label class="block text-sm font-semibold text-[#111418] dark:text-white mb-1.5">Favicon</label>
+                        <div class="border-2 border-dashed border-[#e5e7eb] dark:border-[#2d3b4a] rounded-xl p-4 flex flex-col items-center justify-center bg-[#f8f9fa] dark:bg-[#1e293b] hover:bg-[#f0f2f4] dark:hover:bg-[#24303c] transition-all cursor-pointer">
+                            <span class="material-symbols-outlined text-[#617589] dark:text-[#94a3b8] text-3xl mb-2">add_photo_alternate</span>
+                            <p class="text-[11px] text-[#617589] dark:text-[#94a3b8] text-center">ICO, PNG (32x32)</p>
+                            <input class="hidden" type="file" />
+                        </div>
+                    </div>
+                    <div class="w-32">
+                        <p class="text-[10px] font-bold text-[#617589] dark:text-[#94a3b8] uppercase mb-2">Mevcut Fav</p>
+                        <div class="h-24 bg-[#f0f2f4] dark:bg-[#24303c] rounded-xl flex items-center justify-center border border-[#e5e7eb] dark:border-[#2d3b4a]">
+                            <div class="w-8 h-8 bg-primary rounded shadow-sm flex items-center justify-center text-white text-xs font-bold">İ</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEO Settings Card -->
+    <div class="bg-white dark:bg-[#1a2632] rounded-xl border border-[#e5e7eb] dark:border-[#2d3b4a] overflow-hidden shadow-sm">
+        <div class="p-6 border-b border-[#f0f2f4] dark:border-[#2d3b4a] bg-[#f8f9fa] dark:bg-[#1e293b]">
+            <h3 class="font-bold text-lg flex items-center gap-2 text-[#111418] dark:text-white">
+                <span class="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+                    <span class="material-symbols-outlined text-[18px]">search</span>
+                </span>
+                SEO & Meta Ayarları
+            </h3>
+        </div>
+        <div class="p-6 space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-semibold text-[#111418] dark:text-white mb-1.5">Meta Anahtar Kelimeler</label>
+                    <textarea class="w-full bg-[#f0f2f4] dark:bg-[#24303c] border-[#e5e7eb] dark:border-[#2d3b4a] rounded-lg px-4 py-2.5 focus:ring-primary focus:border-primary text-sm text-[#111418] dark:text-white" placeholder="Eğitim, kurs, teknoloji, ismek, blog..." rows="3"></textarea>
+                    <p class="text-[10px] text-[#617589] dark:text-[#94a3b8] mt-1 italic">Kelimeleri virgül (,) ile ayırarak yazınız.</p>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-[#111418] dark:text-white mb-1.5">Meta Açıklama (Description)</label>
+                    <textarea class="w-full bg-[#f0f2f4] dark:bg-[#24303c] border-[#e5e7eb] dark:border-[#2d3b4a] rounded-lg px-4 py-2.5 focus:ring-primary focus:border-primary text-sm text-[#111418] dark:text-white" placeholder="Siteniz hakkında kısa ve öz SEO açıklaması yazın." rows="3"></textarea>
+                </div>
+            </div>
+            <div class="flex items-start gap-4 p-4 bg-amber-50 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-900/30 rounded-lg">
+                <span class="material-symbols-outlined text-amber-500 text-[20px] mt-0.5">lightbulb</span>
+                <p class="text-xs text-amber-700 dark:text-amber-400 leading-relaxed">SEO ayarları Google ve diğer arama motorlarında görünürlüğünüzü doğrudan etkiler. Anahtar kelimelerin doğal ve içeriğinizle alakalı olduğundan emin olun.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Additional Settings Card -->
+    <div class="bg-white dark:bg-[#1a2632] rounded-xl border border-[#e5e7eb] dark:border-[#2d3b4a] overflow-hidden shadow-sm">
+        <div class="p-6 border-b border-[#f0f2f4] dark:border-[#2d3b4a] bg-[#f8f9fa] dark:bg-[#1e293b]">
+            <h3 class="font-bold text-lg flex items-center gap-2 text-[#111418] dark:text-white">
+                <span class="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+                    <span class="material-symbols-outlined text-[18px]">settings</span>
+                </span>
+                Ek Ayarlar
+            </h3>
+        </div>
+        <div class="p-6 space-y-4">
+            <div class="flex items-center justify-between p-4 bg-[#f8f9fa] dark:bg-[#1e293b] rounded-lg border border-[#e5e7eb] dark:border-[#2d3b4a]">
+                <div>
+                    <p class="text-sm font-semibold text-[#111418] dark:text-white">Site Bakım Modu</p>
+                    <p class="text-xs text-[#617589] dark:text-[#94a3b8] mt-0.5">Siteyi ziyaretçilere geçici olarak kapatır</p>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input class="sr-only peer" type="checkbox" />
+                    <div class="w-11 h-6 bg-gray-200 dark:bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                </label>
+            </div>
+
+            <div class="flex items-center justify-between p-4 bg-[#f8f9fa] dark:bg-[#1e293b] rounded-lg border border-[#e5e7eb] dark:border-[#2d3b4a]">
+                <div>
+                    <p class="text-sm font-semibold text-[#111418] dark:text-white">Yorum Onay Sistemi</p>
+                    <p class="text-xs text-[#617589] dark:text-[#94a3b8] mt-0.5">Yorumlar otomatik onaylanmadan yayınlanmaz</p>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input checked class="sr-only peer" type="checkbox" />
+                    <div class="w-11 h-6 bg-gray-200 dark:bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                </label>
+            </div>
+
+            <div class="flex items-center justify-between p-4 bg-[#f8f9fa] dark:bg-[#1e293b] rounded-lg border border-[#e5e7eb] dark:border-[#2d3b4a]">
+                <div>
+                    <p class="text-sm font-semibold text-[#111418] dark:text-white">Kullanıcı Kayıt</p>
+                    <p class="text-xs text-[#617589] dark:text-[#94a3b8] mt-0.5">Yeni kullanıcıların siteye kayıt olmasına izin ver</p>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input checked class="sr-only peer" type="checkbox" />
+                    <div class="w-11 h-6 bg-gray-200 dark:bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                </label>
+            </div>
+        </div>
+    </div>
+</div>

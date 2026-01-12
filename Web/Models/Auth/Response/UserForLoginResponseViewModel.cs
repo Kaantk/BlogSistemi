@@ -1,4 +1,4 @@
-﻿namespace Web.Models.Common.User
+﻿namespace Web.Models.Auth.Response
 {
     public class UserForLoginResponseViewModel
     {

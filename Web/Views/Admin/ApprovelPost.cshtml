@@ -1,0 +1,228 @@
+﻿@{
+    ViewBag.Title = "- Blog Onay";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<!-- Page Header -->
+<div class="flex flex-col gap-2 mb-6">
+    <div class="flex items-center gap-2 text-sm">
+        <a class="text-[#617589] dark:text-[#94a3b8] hover:text-primary transition-colors" href="@Url.Action("Index", "Admin")">Yönetici</a>
+        <span class="text-[#617589] dark:text-[#94a3b8]">/</span>
+        <span class="text-[#111418] dark:text-white font-medium">Blog Onay Sistemi</span>
+    </div>
+    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-4">
+        <div>
+            <h1 class="text-[#111418] dark:text-white text-3xl font-bold">Blog Onay Sistemi</h1>
+            <p class="text-[#617589] dark:text-[#94a3b8] mt-1">Yazarlar tarafından gönderilen ve inceleme bekleyen içerikler.</p>
+        </div>
+        <div class="flex gap-3 w-full lg:w-auto">
+            <button class="flex flex-1 lg:flex-none items-center justify-center gap-2 rounded-lg h-10 px-4 bg-white dark:bg-[#1a2632] border border-[#e5e7eb] dark:border-[#2d3b4a] text-[#111418] dark:text-white text-sm font-medium hover:bg-[#f0f2f4] dark:hover:bg-[#24303c] transition-colors">
+                <span class="material-symbols-outlined text-[18px]">filter_list</span>
+                <span>Filtrele</span>
+            </button>
+            <button class="flex flex-1 lg:flex-none items-center justify-center gap-2 rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold shadow-lg shadow-primary/20 hover:bg-primary-dark transition-all hover:scale-[1.02]">
+                <span class="material-symbols-outlined text-[18px]">check_circle</span>
+                <span>Tümünü Onayla</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Stats Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div class="bg-white dark:bg-[#1a2632] flex flex-col gap-2 rounded-xl p-6 border border-[#e5e7eb] dark:border-[#2d3b4a] shadow-sm hover:shadow-md transition-shadow">
+        <p class="text-[#617589] dark:text-[#94a3b8] text-sm font-medium">Onay Bekleyen</p>
+        <div class="flex items-baseline justify-between">
+            <p class="text-[#111418] dark:text-white text-3xl font-bold">24</p>
+            <span class="text-[#078838] dark:text-green-400 bg-green-50 dark:bg-green-900/20 px-2 py-0.5 rounded text-xs font-bold">+15%</span>
+        </div>
+    </div>
+
+    <div class="bg-white dark:bg-[#1a2632] flex flex-col gap-2 rounded-xl p-6 border border-[#e5e7eb] dark:border-[#2d3b4a] shadow-sm hover:shadow-md transition-shadow">
+        <p class="text-[#617589] dark:text-[#94a3b8] text-sm font-medium">Bugün Gelen</p>
+        <div class="flex items-baseline justify-between">
+            <p class="text-[#111418] dark:text-white text-3xl font-bold">8</p>
+            <span class="text-[#078838] dark:text-green-400 bg-green-50 dark:bg-green-900/20 px-2 py-0.5 rounded text-xs font-bold">+5%</span>
+        </div>
+    </div>
+
+    <div class="bg-white dark:bg-[#1a2632] flex flex-col gap-2 rounded-xl p-6 border border-[#e5e7eb] dark:border-[#2d3b4a] shadow-sm hover:shadow-md transition-shadow">
+        <p class="text-[#617589] dark:text-[#94a3b8] text-sm font-medium">Reddedilen (Aylık)</p>
+        <div class="flex items-baseline justify-between">
+            <p class="text-[#111418] dark:text-white text-3xl font-bold">12</p>
+            <span class="text-[#e73908] dark:text-red-400 bg-red-50 dark:bg-red-900/20 px-2 py-0.5 rounded text-xs font-bold">-2%</span>
+        </div>
+    </div>
+</div>
+
+<!-- Blog Posts Table -->
+<div class="bg-white dark:bg-[#1a2632] rounded-xl border border-[#e5e7eb] dark:border-[#2d3b4a] shadow-sm overflow-hidden mb-8">
+    <div class="overflow-x-auto">
+        <table class="w-full text-left">
+            <thead class="bg-[#f8f9fa] dark:bg-[#1e293b]">
+                <tr>
+                    <th class="px-6 py-4 text-xs font-bold text-[#617589] dark:text-[#94a3b8] uppercase tracking-wider">Yazı Başlığı & Özet</th>
+                    <th class="px-6 py-4 text-xs font-bold text-[#617589] dark:text-[#94a3b8] uppercase tracking-wider">Yazar</th>
+                    <th class="px-6 py-4 text-xs font-bold text-[#617589] dark:text-[#94a3b8] uppercase tracking-wider">Tarih</th>
+                    <th class="px-6 py-4 text-xs font-bold text-[#617589] dark:text-[#94a3b8] uppercase tracking-wider">Durum</th>
+                    <th class="px-6 py-4 text-xs font-bold text-[#617589] dark:text-[#94a3b8] uppercase tracking-wider text-right">İşlemler</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-[#f0f2f4] dark:divide-[#2d3b4a]">
+                <!-- Row 1 -->
+                <tr class="hover:bg-[#f8f9fa] dark:hover:bg-[#1e293b] transition-colors">
+                    <td class="px-6 py-4">
+                        <div class="flex flex-col gap-1 max-w-md">
+                            <span class="text-[#111418] dark:text-white font-bold text-sm line-clamp-1">Yapay Zeka ve Sanatın Geleceği</span>
+                            <span class="text-[#617589] dark:text-[#94a3b8] text-xs line-clamp-1 italic">Yapay zeka teknolojilerinin sanat dünyasındaki etkisi üzerine derinlemesine...</span>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="flex items-center gap-3">
+                            <div class="size-8 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-primary dark:text-blue-400 font-bold text-xs">ME</div>
+                            <span class="text-[#111418] dark:text-white text-sm font-medium">Mehmet Ersoy</span>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="text-[#617589] dark:text-[#94a3b8] text-sm">24 May 2024</span>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400">Beklemede</span>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="flex justify-end items-center gap-2">
+                            <button class="p-2 hover:bg-[#f0f2f4] dark:hover:bg-[#24303c] rounded-lg text-[#617589] dark:text-[#94a3b8] hover:text-primary transition-colors" title="İncele">
+                                <span class="material-symbols-outlined text-[18px]">visibility</span>
+                            </button>
+                            <button class="p-2 hover:bg-green-50 dark:hover:bg-green-900/20 rounded-lg text-green-600 dark:text-green-400 transition-colors" title="Onayla">
+                                <span class="material-symbols-outlined text-[18px]">check_circle</span>
+                            </button>
+                            <button class="p-2 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg text-red-600 dark:text-red-400 transition-colors" title="Reddet">
+                                <span class="material-symbols-outlined text-[18px]">cancel</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- Row 2 -->
+                <tr class="hover:bg-[#f8f9fa] dark:hover:bg-[#1e293b] transition-colors">
+                    <td class="px-6 py-4">
+                        <div class="flex flex-col gap-1 max-w-md">
+                            <span class="text-[#111418] dark:text-white font-bold text-sm line-clamp-1">İstanbul'un Gizli Bahçeleri</span>
+                            <span class="text-[#617589] dark:text-[#94a3b8] text-xs line-clamp-1 italic">Hafta sonu kaçamakları için şehir içinde keşfedilmeyi bekleyen 5 lokasyon...</span>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="flex items-center gap-3">
+                            <div class="size-8 rounded-full bg-pink-100 dark:bg-pink-900/30 flex items-center justify-center text-pink-600 dark:text-pink-400 font-bold text-xs">SA</div>
+                            <span class="text-[#111418] dark:text-white text-sm font-medium">Selin Aksoy</span>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="text-[#617589] dark:text-[#94a3b8] text-sm">23 May 2024</span>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400">Beklemede</span>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="flex justify-end items-center gap-2">
+                            <button class="p-2 hover:bg-[#f0f2f4] dark:hover:bg-[#24303c] rounded-lg text-[#617589] dark:text-[#94a3b8] hover:text-primary transition-colors" title="İncele">
+                                <span class="material-symbols-outlined text-[18px]">visibility</span>
+                            </button>
+                            <button class="p-2 hover:bg-green-50 dark:hover:bg-green-900/20 rounded-lg text-green-600 dark:text-green-400 transition-colors" title="Onayla">
+                                <span class="material-symbols-outlined text-[18px]">check_circle</span>
+                            </button>
+                            <button class="p-2 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg text-red-600 dark:text-red-400 transition-colors" title="Reddet">
+                                <span class="material-symbols-outlined text-[18px]">cancel</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- Row 3 -->
+                <tr class="hover:bg-[#f8f9fa] dark:hover:bg-[#1e293b] transition-colors">
+                    <td class="px-6 py-4">
+                        <div class="flex flex-col gap-1 max-w-md">
+                            <span class="text-[#111418] dark:text-white font-bold text-sm line-clamp-1">Modern Mutfak Teknikleri: Sous-Vide</span>
+                            <span class="text-[#617589] dark:text-[#94a3b8] text-xs line-clamp-1 italic">Evdeki şefler için profesyonel pişirme yöntemleri ve ekipman önerileri.</span>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="flex items-center gap-3">
+                            <div class="size-8 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400 font-bold text-xs">ÇD</div>
+                            <span class="text-[#111418] dark:text-white text-sm font-medium">Caner Demir</span>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="text-[#617589] dark:text-[#94a3b8] text-sm">22 May 2024</span>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400">Beklemede</span>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="flex justify-end items-center gap-2">
+                            <button class="p-2 hover:bg-[#f0f2f4] dark:hover:bg-[#24303c] rounded-lg text-[#617589] dark:text-[#94a3b8] hover:text-primary transition-colors" title="İncele">
+                                <span class="material-symbols-outlined text-[18px]">visibility</span>
+                            </button>
+                            <button class="p-2 hover:bg-green-50 dark:hover:bg-green-900/20 rounded-lg text-green-600 dark:text-green-400 transition-colors" title="Onayla">
+                                <span class="material-symbols-outlined text-[18px]">check_circle</span>
+                            </button>
+                            <button class="p-2 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg text-red-600 dark:text-red-400 transition-colors" title="Reddet">
+                                <span class="material-symbols-outlined text-[18px]">cancel</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="px-6 py-4 border-t border-[#f0f2f4] dark:border-[#2d3b4a] flex items-center justify-between">
+        <p class="text-sm text-[#617589] dark:text-[#94a3b8]">Toplam 24 kayıttan 1-3 arası gösteriliyor</p>
+        <div class="flex gap-1">
+            <button class="p-2 border border-[#e5e7eb] dark:border-[#2d3b4a] rounded-lg text-[#617589] dark:text-[#94a3b8] hover:bg-[#f0f2f4] dark:hover:bg-[#24303c] disabled:opacity-50 transition-colors" disabled>
+                <span class="material-symbols-outlined text-[20px]">chevron_left</span>
+            </button>
+            <button class="px-3.5 py-1.5 bg-primary text-white rounded-lg text-sm font-bold">1</button>
+            <button class="px-3.5 py-1.5 border border-[#e5e7eb] dark:border-[#2d3b4a] dark:text-white rounded-lg text-sm font-medium hover:bg-[#f0f2f4] dark:hover:bg-[#24303c] transition-colors">2</button>
+            <button class="px-3.5 py-1.5 border border-[#e5e7eb] dark:border-[#2d3b4a] dark:text-white rounded-lg text-sm font-medium hover:bg-[#f0f2f4] dark:hover:bg-[#24303c] transition-colors">3</button>
+            <button class="p-2 border border-[#e5e7eb] dark:border-[#2d3b4a] rounded-lg text-[#617589] dark:text-[#94a3b8] hover:bg-[#f0f2f4] dark:hover:bg-[#24303c] transition-colors">
+                <span class="material-symbols-outlined text-[20px]">chevron_right</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Preview Card -->
+<div class="bg-white dark:bg-[#1a2632] rounded-xl border border-[#e5e7eb] dark:border-[#2d3b4a] p-6 flex flex-col gap-4 shadow-sm">
+    <div class="flex items-center justify-between border-b border-[#f0f2f4] dark:border-[#2d3b4a] pb-4">
+        <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary">preview</span>
+            <h3 class="text-[#111418] dark:text-white font-bold">Hızlı Önizleme</h3>
+        </div>
+        <p class="text-xs text-[#617589] dark:text-[#94a3b8]">Seçilen yazı: Yapay Zeka ve Sanatın Geleceği</p>
+    </div>
+    <div class="flex flex-col lg:flex-row gap-6">
+        <div class="w-full lg:w-48 aspect-video lg:aspect-square bg-[#f0f2f4] dark:bg-[#24303c] rounded-lg bg-cover bg-center overflow-hidden" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDAdlLfVM7lyACEzJrX-bpnqjNiJghgNo56n-wGRHtq6j5_Lko_Ed_8KoYjiJ0Q2cLrVfORAx0Nhjq8Vn3ucNcT-K5oF0r4zwTnDDxNLzAFyab3IeXfW1ei2WsaEIF_49E4iLJ_1gcP1cuOTYBE4yxvwtZDC2OLTYdfiSZ1qso9qg1er87f09vDiHo8IXLzkb1Px4UN9qpm4BKGjOuUJOWGD8jzozb7OZw5vqe32fnuYqcaSclmZykQ9cIqlBp3adRNgxA73TtELjk");'>
+        </div>
+        <div class="flex-1 flex flex-col gap-3">
+            <div class="flex flex-wrap gap-2">
+                <span class="px-2 py-0.5 rounded-md bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400 text-[10px] font-bold uppercase tracking-wide">Teknoloji</span>
+                <span class="px-2 py-0.5 rounded-md bg-purple-50 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400 text-[10px] font-bold uppercase tracking-wide">Sanat</span>
+            </div>
+            <h2 class="text-[#111418] dark:text-white text-xl font-bold">Yapay Zeka ve Sanatın Geleceği</h2>
+            <p class="text-[#617589] dark:text-[#94a3b8] text-sm leading-relaxed line-clamp-3">
+                Yapay zeka, son yıllarda sadece veri işleme ve otomasyon alanında değil, yaratıcılık gerektiren sanat dallarında da kendine geniş bir yer buldu. Bu yazıda, üretken yapay zeka araçlarının sanatçıların yerini mi alacağını yoksa yeni bir iş birliği çağının mı kapısını araladığını tartışıyoruz. Gerek görsel sanatlar gerekse edebiyat dünyasındaki son gelişmeler...
+            </p>
+            <div class="mt-2 flex gap-3">
+                <button class="flex-1 lg:flex-none px-6 h-10 rounded-lg bg-primary text-white text-sm font-bold shadow-lg shadow-primary/20 hover:bg-primary-dark transition-all">
+                    İncelemeyi Başlat
+                </button>
+                <button class="flex-1 lg:flex-none px-6 h-10 rounded-lg border border-[#e5e7eb] dark:border-[#2d3b4a] text-[#111418] dark:text-white text-sm font-medium hover:bg-[#f0f2f4] dark:hover:bg-[#24303c] transition-colors">
+                    Düzenle
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

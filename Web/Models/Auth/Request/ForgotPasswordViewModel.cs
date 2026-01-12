@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Web.Models.ViewModels.Auth
+namespace Web.Models.Auth.Request
 {
     public class ForgotPasswordViewModel
     {

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>@ViewBag.Title - İSMEK BLOG Yönetici Paneli</title>
+    <title>Yönetici Paneli @ViewBag.Title</title>
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect" />
@@ -24,6 +24,7 @@
                 extend: {
                     colors: {
                         "primary": "#137fec",
+                        "primary-dark": "#0e5fb1",
                         "background-light": "#f6f7f8",
                         "background-dark": "#101922",
                     },
@@ -41,7 +42,7 @@
         }
     </script>
 
-    <style>
+    <style type="text/tailwindcss">
         .material-symbols-outlined {
             font-size: 24px;
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
@@ -50,7 +51,7 @@
             .material-symbols-outlined.fill {
                 font-variation-settings: 'FILL' 1;
             }
-        /* Custom scrollbar for webkit */
+
         ::-webkit-scrollbar {
             width: 6px;
             height: 6px;
@@ -68,6 +69,10 @@
             ::-webkit-scrollbar-thumb:hover {
                 background: #94a3b8;
             }
+
+        :root {
+            --primary-color: #137fec;
+        }
     </style>
 
     @RenderSection("Styles", required: false)
@@ -84,65 +89,66 @@
             </div>
             <div class="flex flex-col">
                 <h1 class="text-base font-bold leading-none tracking-tight">İSMEK BLOG</h1>
-                <p class="text-[#617589] dark:text-[#94a3b8] text-xs font-normal mt-1">Admin Panel</p>
+                <p class="text-[#617589] dark:text-[#94a3b8] text-[10px] font-normal mt-1 uppercase tracking-wider">Yönetici Paneli</p>
             </div>
         </div>
 
         <!-- Navigation -->
         <nav class="flex-1 overflow-y-auto py-4 px-3 flex flex-col gap-1">
             <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary text-white group transition-colors"
-               href="@Url.Action("Index", "Dashboard")">
+               href="@Url.Action("Index", "Admin")">
                 <span class="material-symbols-outlined fill text-[20px]">dashboard</span>
                 <span class="text-sm font-medium">Dashboard</span>
             </a>
 
-            <p class="px-3 mt-4 mb-2 text-xs font-semibold text-[#617589] dark:text-[#94a3b8] uppercase tracking-wider">İçerik Yönetimi</p>
+            <p class="px-3 mt-4 mb-2 text-xs font-semibold text-[#617589] dark:text-[#94a3b8] uppercase tracking-wider">Kullanıcı İşlemleri</p>
 
             <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111418] dark:text-slate-300 hover:bg-[#f0f2f4] dark:hover:bg-[#2d3b4a] transition-colors group"
-               href="@Url.Action("Index", "Posts")">
-                <span class="material-symbols-outlined text-[20px] text-[#617589] dark:text-[#94a3b8] group-hover:text-primary transition-colors">article</span>
-                <span class="text-sm font-medium">Gönderiler</span>
-            </a>
-
-            <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111418] dark:text-slate-300 hover:bg-[#f0f2f4] dark:hover:bg-[#2d3b4a] transition-colors group"
-               href="@Url.Action("Index", "Categories")">
-                <span class="material-symbols-outlined text-[20px] text-[#617589] dark:text-[#94a3b8] group-hover:text-primary transition-colors">category</span>
-                <span class="text-sm font-medium">Kategoriler</span>
-            </a>
-
-            <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111418] dark:text-slate-300 hover:bg-[#f0f2f4] dark:hover:bg-[#2d3b4a] transition-colors group"
-               href="@Url.Action("Index", "Comments")">
-                <span class="material-symbols-outlined text-[20px] text-[#617589] dark:text-[#94a3b8] group-hover:text-primary transition-colors">chat_bubble</span>
-                <span class="text-sm font-medium">Yorumlar</span>
-                <span class="ml-auto bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">3</span>
-            </a>
-
-            <p class="px-3 mt-4 mb-2 text-xs font-semibold text-[#617589] dark:text-[#94a3b8] uppercase tracking-wider">Kullanıcılar</p>
-
-            <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111418] dark:text-slate-300 hover:bg-[#f0f2f4] dark:hover:bg-[#2d3b4a] transition-colors group"
-               href="@Url.Action("Index", "Users")">
+               href="@Url.Action("Users", "Admin")">
                 <span class="material-symbols-outlined text-[20px] text-[#617589] dark:text-[#94a3b8] group-hover:text-primary transition-colors">group</span>
-                <span class="text-sm font-medium">Kullanıcılar</span>
+                <span class="text-sm font-medium">Kullanıcı Yönetimi</span>
             </a>
 
             <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111418] dark:text-slate-300 hover:bg-[#f0f2f4] dark:hover:bg-[#2d3b4a] transition-colors group"
-               href="@Url.Action("Index", "Admins")">
-                <span class="material-symbols-outlined text-[20px] text-[#617589] dark:text-[#94a3b8] group-hover:text-primary transition-colors">manage_accounts</span>
-                <span class="text-sm font-medium">Yöneticiler</span>
+               href="@Url.Action("Roles", "Admin")">
+                <span class="material-symbols-outlined text-[20px] text-[#617589] dark:text-[#94a3b8] group-hover:text-primary transition-colors">verified_user</span>
+                <span class="text-sm font-medium">Rol Yönetimi</span>
             </a>
-
-            <p class="px-3 mt-4 mb-2 text-xs font-semibold text-[#617589] dark:text-[#94a3b8] uppercase tracking-wider">Sistem</p>
+                    
+            <p class="px-3 mt-4 mb-2 text-xs font-semibold text-[#617589] dark:text-[#94a3b8] uppercase tracking-wider">İçerik Denetimi</p>
 
             <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111418] dark:text-slate-300 hover:bg-[#f0f2f4] dark:hover:bg-[#2d3b4a] transition-colors group"
-               href="@Url.Action("Index", "Settings")">
-                <span class="material-symbols-outlined text-[20px] text-[#617589] dark:text-[#94a3b8] group-hover:text-primary transition-colors">settings</ span>
-                <span class="text-sm font-medium">Ayarlar</span>
+               href="@Url.Action("ApprovelPost", "Admin")">
+                <span class="material-symbols-outlined text-[20px] text-[#617589] dark:text-[#94a3b8] group-hover:text-primary transition-colors">fact_check</span>
+                <span class="text-sm font-medium">Blog Onay Sistemi</span>
+                <span class="ml-auto bg-amber-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">8</span>
             </a>
 
-            <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111418] dark:text-slate-300 hover:bg-[#f0f2f4] dark:hover:bg-[#2d3b4a] transition-colors group mt-auto"
+            <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111418] dark:text-slate-300 hover:bg-[#f0f2f4] dark:hover:bg-[#2d3b4a] transition-colors group"
+               href="@Url.Action("Categories", "Admin")">
+                <span class="material-symbols-outlined text-[20px] text-[#617589] dark:text-[#94a3b8] group-hover:text-primary transition-colors">category</span>
+                <span class="text-sm font-medium">Kategori Yönetimi</span>
+            </a>
+
+            <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111418] dark:text-slate-300 hover:bg-[#f0f2f4] dark:hover:bg-[#2d3b4a] transition-colors group"
+               href="@Url.Action("ApprovelComment", "Admin")">
+                <span class="material-symbols-outlined text-[20px] text-[#617589] dark:text-[#94a3b8] group-hover:text-primary transition-colors">comment_bank</span>
+                <span class="text-sm font-medium">Yorum Onay Sistemi</span>
+                <span class="ml-auto bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">12</span>
+            </a>
+
+            <p class="px-3 mt-4 mb-2 text-xs font-semibold text-[#617589] dark:text-[#94a3b8] uppercase tracking-wider">Yapılandırma</p>
+
+            <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#111418] dark:text-slate-300 hover:bg-[#f0f2f4] dark:hover:bg-[#2d3b4a] transition-colors group"
+               href="@Url.Action("WebsiteSettings", "Admin")">
+                <span class="material-symbols-outlined text-[20px] text-[#617589] dark:text-[#94a3b8] group-hover:text-primary transition-colors">settings</span>
+                <span class="text-sm font-medium">Site Ayarları</span>
+            </a>
+
+            <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors group mt-auto"
                href="@Url.Action("Logout", "Auth")">
-                <span class="material-symbols-outlined text-[20px] text-[#617589] dark:text-[#94a3b8] group-hover:text-red-500 transition-colors">logout</span>
-                <span class="text-sm font-medium">Çıkış Yap</span>
+                <span class="material-symbols-outlined text-[20px]">logout</span>
+                <span class="text-sm font-medium">Güvenli Çıkış</span>
             </a>
         </nav>
     </aside>
@@ -160,7 +166,7 @@
                         <span class="material-symbols-outlined text-[20px]">search</span>
                     </span>
                     <input class="w-full pl-10 pr-4 py-2 bg-[#f0f2f4] dark:bg-[#24303c] dark:text-white border-none rounded-lg text-sm focus:ring-2 focus:ring-primary/50 placeholder:text-[#617589] dark:placeholder:text-[#64748b]"
-                           placeholder="Gönderi, kullanıcı veya ayar ara..."
+                           placeholder="Hızlı ara..."
                            type="text" />
                 </div>
             </div>
@@ -181,7 +187,8 @@
                     </div>
                     <button class="relative group">
                         <div class="size-9 rounded-full bg-cover bg-center border-2 border-white dark:border-[#2d3b4a] shadow-sm ring-2 ring-transparent group-hover:ring-primary/20 transition-all"
-                             style='background-image: url("https://ui-avatars.com/api/?name=@ViewBag.UserName&background=137fec&color=fff");'>
+                             data-alt="User avatar for @ViewBag.UserName"
+                             style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBSeFnOAbhfvUpEJ6saEB9OKYR9TYjKUyBhDVwQAoH9F9QLpbdUPlGgdZRdkaTJGABVr0EbA5DDN5plOTCPFGRphiuM19chV9pNg-7DciC6K5vd31gBO1kpRuH-BmQ-QOCkTL31SIhniStU0D205ZX7afOfTnXouktny9IpJlU28T8Tx7EsqVXm4iza65fEzw8kWqDTZKJxQSRGfS-mWrExgHeY1IxkxWS4d_EEv6yVKVoTV84aWLI81q9h82kTIAAv5RBsaYw8Y9c");'>
                         </div>
                     </button>
                 </div>
@@ -194,8 +201,9 @@
                 @RenderBody()
 
                 <!-- Footer -->
-                <footer class="mt-auto py-6 text-center text-xs text-[#617589] dark:text-[#94a3b8] border-t border-[#f0f2f4] dark:border-[#2d3b4a]">
-                    <p>© @DateTime.Now.Year İSMEK BLOG - Kaan Tetik tarafından yazılmıştır. Tüm hakları saklıdır.</p>
+                <footer class="mt-auto py-8 text-center border-t border-[#f0f2f4] dark:border-[#2d3b4a]">
+                    <p class="text-xs text-[#617589] dark:text-[#94a3b8] font-medium">© @DateTime.Now.Year İSMEK BLOG - Yönetici Paneli</p>
+                    <p class="text-[10px] text-[#94a3b8] mt-1 italic">Kaan Tetik tarafından yazılmıştır.</p>
                 </footer>
             </div>
         </div>

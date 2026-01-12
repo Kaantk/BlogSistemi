@@ -5,7 +5,8 @@ using Business.Constants;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using Core.Utilities.Security.Jwt;
-using Entities.Dtos.User;
+using Entities.Dtos.Auth.Request;
+using Entities.Dtos.Auth.Response;
 using Microsoft.AspNetCore.Identity;
 
 namespace Business.Concrete

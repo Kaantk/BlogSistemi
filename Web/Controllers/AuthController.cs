@@ -1,21 +1,25 @@
-﻿
+﻿using Entities.Dtos.Common;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Web.Models.Common.User;
-using Web.Services.Auth.Abstract;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using Web.Models.Auth.Request;
+using Web.Models.Auth.Response;
 
 namespace Web.Controllers
 {
     public class AuthController : Controller
     {
-        private readonly IApiAuthService _apiAuthService;
-        private readonly IAuthSessionService _authSessionService;
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        public AuthController(IApiAuthService apiAuthService, IAuthSessionService authSessionService)
+        public AuthController(IHttpClientFactory httpClientFactory)
         {
-            _apiAuthService = apiAuthService;
-            _authSessionService = authSessionService;
+            _httpClientFactory = httpClientFactory;
         }
+
+        #region HttpGet İşlemleri
 
         [HttpGet]
         public IActionResult Index()
@@ -24,10 +28,33 @@ namespace Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Login()
+        public IActionResult Login()
         {
             return View();
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        #endregion
+
+        #region HttpPost İşlemleri
 
         [HttpPost]
         public async Task<IActionResult> Login(UserForLoginViewModel dto)
@@ -40,43 +67,57 @@ namespace Web.Controllers
             }
 
             // API isteği
-            var result = await _apiAuthService.LoginAsync(dto);
+            var client = _httpClientFactory.CreateClient("ApiClient");
+            var response = await client.PostAsJsonAsync("auth/login", dto);
 
-            if (!result.Success)
+            // API'den dönen veriye göre cevap döndür
+            if (!response.IsSuccessStatusCode)
             {
-                ViewBag.ErrorMessage = result.Message;
+                ViewBag.ErrorMessage = "API ile bağlantı kurulamadı.";
                 return View(dto);
             }
 
-            // 4JWT → Cookie Auth (tüm detay servis içinde)
-            await _authSessionService.SignInAsync(result.Data.AccessToken);
+            var result = await response.Content.ReadFromJsonAsync<ApiResponse<UserForLoginResponseViewModel>>();
+
+            if (result == null || !result.Success)
+            {
+                ViewBag.ErrorMessage = result?.Message ?? "Giriş başarısız.";
+                return View(dto);
+            }
+
+            // JWT → Cookie Auth
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(result.Data.AccessToken);
+            var claims = jwtToken.Claims.ToList();
+
+            var identity = new ClaimsIdentity(
+                claims,
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                ClaimTypes.Name,
+                ClaimTypes.Role
+            );
+
+            var authProperties = new AuthenticationProperties
+            {
+                IsPersistent = true,
+                ExpiresUtc = jwtToken.ValidTo
+            };
+
+            await HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(identity),
+                authProperties
+            );
 
             return RedirectToAction("Index", "Home");
-        }
-
-        [HttpGet]
-        public IActionResult Logout()
-        {
-            _authSessionService.SignOutAsync();
-            return RedirectToAction("Index", "Home");
-        }
-
-        [HttpGet]
-        public IActionResult Register()
-        {
-            return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> Register(UserForRegisterViewModel dto)
         {
+            // Kullanıcı kayıt işlemleri yapılacak
             return View();
         }
-
-        [HttpGet]
-        public IActionResult ForgotPassword()
-        {
-            return View();
-        }
+        #endregion
     }
 }
