@@ -5,15 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities.Dtos.Admin.UserManagement
+namespace Entities.Dtos.Admin
 {
-    public class UserManagementListDto : IDto
+    public class UsersDto : IDto
     {
-        public int UserId { get; set; }
+        public int Id { get; set; }
         public string? UserName { get; set; }
         public string? Email { get; set; }
-        public string? Rol { get; set; }
-        public bool IsActive { get; set; }
+        public string? Role { get; set; }
+        public bool Status { get; set; }
         public DateTime CreatedDate { get; set; }
     }
 }

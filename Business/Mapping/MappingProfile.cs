@@ -7,7 +7,6 @@ namespace Business.Mapping
         public MappingProfile()
         {
             // Mappingleri burada tanımla
-            //CreateMap<CategoryCreateDto, Category>();
         }
     }
 }

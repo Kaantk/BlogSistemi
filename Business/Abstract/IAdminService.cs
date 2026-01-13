@@ -1,4 +1,5 @@
-﻿using Entities.Dtos.Admin.UserManagement;
+﻿using Core.Entities.Concrete;
+using Entities.Dtos.Admin;
 using Entities.Dtos.Common;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,6 @@ namespace Business.Abstract
 {
     public interface IAdminService 
     {
-        Task<ApiResponse<UserManagementListDto>> ListAsync();
+        Task<ApiResponse<List<ApplicationUser>>> GetUsersAsync();
     }
 }

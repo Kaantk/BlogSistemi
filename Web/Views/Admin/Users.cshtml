@@ -1,4 +1,8 @@
-﻿@{
+﻿@using Web.Models.Admin.Request
+
+@model List<UsersViewModel>
+
+@{
     ViewBag.Title = "- Kullanıcı Yönetimi";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
@@ -15,9 +19,9 @@
             <h1 class="text-[#111418] dark:text-white text-3xl font-bold">Kullanıcılar</h1>
             <p class="text-[#617589] dark:text-[#94a3b8] mt-1">Platformdaki tüm kayıtlı kullanıcıları buradan yönetebilirsiniz.</p>
         </div>
-        <button class="flex items-center gap-2 rounded-lg bg-primary h-11 px-6 text-white text-sm font-bold shadow-lg shadow-primary/20 hover:bg-primary-dark transition-all hover:scale-[1.02]">
+        <button onclick="openCreateUserModal()" class="flex items-center gap-2 rounded-lg bg-primary h-11 px-6 text-white text-sm font-bold shadow-lg shadow-primary/20 hover:bg-primary-dark transition-all hover:scale-[1.02]">
             <span class="material-symbols-outlined text-[20px]">person_add</span>
-            Yeni Kullanıcı Ekle
+            Hızlı Kullanıcı Ekle
         </button>
     </div>
 </div>
@@ -29,34 +33,45 @@
             <p class="text-[#617589] dark:text-[#94a3b8] text-sm font-medium">Toplam Kullanıcı</p>
             <span class="material-symbols-outlined text-primary">groups</span>
         </div>
-        <p class="text-[#111418] dark:text-white text-3xl font-bold">1,250</p>
+        <p class="text-[#111418] dark:text-white text-3xl font-bold">@Model.Count</p>
         <p class="text-[#078838] dark:text-green-400 text-xs font-bold flex items-center gap-1">
-            <span class="material-symbols-outlined text-xs">trending_up</span> +5% bu ay
+            <span class="material-symbols-outlined text-xs">trending_up</span> Kayıtlı kullanıcı
         </p>
     </div>
 
     <div class="bg-white dark:bg-[#1a2632] flex flex-col gap-2 rounded-xl p-6 border border-[#e5e7eb] dark:border-[#2d3b4a] shadow-sm hover:shadow-md transition-shadow">
         <div class="flex justify-between items-start">
-            <p class="text-[#617589] dark:text-[#94a3b8] text-sm font-medium">Bugün Aktif</p>
+            <p class="text-[#617589] dark:text-[#94a3b8] text-sm font-medium">Aktif Kullanıcı</p>
             <span class="material-symbols-outlined text-green-500">bolt</span>
         </div>
-        <p class="text-[#111418] dark:text-white text-3xl font-bold">84</p>
+        <p class="text-[#111418] dark:text-white text-3xl font-bold">@Model.Count(u => u.Status)</p>
         <p class="text-[#078838] dark:text-green-400 text-xs font-bold flex items-center gap-1">
-            <span class="material-symbols-outlined text-xs">trending_up</span> +12% bugün
+            <span class="material-symbols-outlined text-xs">check_circle</span> Aktif durumdaki
         </p>
     </div>
 
     <div class="bg-white dark:bg-[#1a2632] flex flex-col gap-2 rounded-xl p-6 border border-[#e5e7eb] dark:border-[#2d3b4a] shadow-sm hover:shadow-md transition-shadow">
         <div class="flex justify-between items-start">
-            <p class="text-[#617589] dark:text-[#94a3b8] text-sm font-medium">Bekleyen Onaylar</p>
+            <p class="text-[#617589] dark:text-[#94a3b8] text-sm font-medium">Pasif Kullanıcı</p>
             <span class="material-symbols-outlined text-orange-500">pending</span>
         </div>
-        <p class="text-[#111418] dark:text-white text-3xl font-bold">12</p>
+        <p class="text-[#111418] dark:text-white text-3xl font-bold">@Model.Count(u => !u.Status)</p>
         <p class="text-[#e73908] dark:text-red-400 text-xs font-bold flex items-center gap-1">
-            <span class="material-symbols-outlined text-xs">trending_down</span> -2% dünden beri
+            <span class="material-symbols-outlined text-xs">cancel</span> Pasif durumdaki
         </p>
     </div>
 </div>
+
+<!-- Error Message -->
+@if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+{
+    <div class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-4 mb-6">
+        <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-red-600 dark:text-red-400">error</span>
+            <p class="text-red-800 dark:text-red-300 text-sm font-medium">@ViewBag.ErrorMessage</p>
+        </div>
+    </div>
+}
 
 <!-- User Table Card -->
 <div class="bg-white dark:bg-[#1a2632] rounded-xl border border-[#e5e7eb] dark:border-[#2d3b4a] shadow-sm overflow-hidden">
@@ -66,72 +81,371 @@
             <span class="material-symbols-outlined text-[#617589] dark:text-[#94a3b8] text-[20px]">search</span>
             <input class="bg-transparent border-none focus:ring-0 text-sm w-full placeholder:text-[#617589] dark:placeholder:text-[#64748b] dark:text-white"
                    placeholder="Kullanıcı adı veya e-posta ile ara..."
-                   type="text" />
+                   type="text"
+                   id="searchInput" />
         </div>
         <div class="flex gap-3">
-            <select class="rounded-lg border-[#e5e7eb] dark:border-[#2d3b4a] dark:bg-[#24303c] text-sm font-medium text-[#111418] dark:text-white focus:border-primary focus:ring-primary min-w-[140px]">
-                <option>Tüm Roller</option>
-                <option>Yönetici</option>
-                <option>Editör</option>
-                <option>Yazar</option>
+            <select id="roleFilter" class="rounded-lg border-[#e5e7eb] dark:border-[#2d3b4a] dark:bg-[#24303c] text-sm font-medium text-[#111418] dark:text-white focus:border-primary focus:ring-primary min-w-[140px]">
+                <option value="">Tüm Roller</option>
+                <option value="ADMIN">Yönetici</option>
+                <option value="AUTHOR">Yazar</option>
+                <option value="USER">Kullanıcı</option>
+                <option value="GUEST">Misafir</option>
             </select>
-            <select class="rounded-lg border-[#e5e7eb] dark:border-[#2d3b4a] dark:bg-[#24303c] text-sm font-medium text-[#111418] dark:text-white focus:border-primary focus:ring-primary min-w-[140px]">
-                <option>Tüm Durumlar</option>
-                <option>Aktif</option>
-                <option>Askıda</option>
+            <select id="statusFilter" class="rounded-lg border-[#e5e7eb] dark:border-[#2d3b4a] dark:bg-[#24303c] text-sm font-medium text-[#111418] dark:text-white focus:border-primary focus:ring-primary min-w-[140px]">
+                <option value="">Tüm Durumlar</option>
+                <option value="true">Aktif</option>
+                <option value="false">Pasif</option>
             </select>
         </div>
     </div>
 
     <!-- Table -->
     <div class="overflow-x-auto">
-        <table class="w-full text-left">
-            <thead class="bg-[#f8f9fa] dark:bg-[#1e293b]">
-                <tr>
-                    <th class="px-6 py-4 text-xs font-bold text-[#617589] dark:text-[#94a3b8] uppercase tracking-wider">Ad Soyad</th>
-                    <th class="px-6 py-4 text-xs font-bold text-[#617589] dark:text-[#94a3b8] uppercase tracking-wider">E-posta</th>
-                    <th class="px-6 py-4 text-xs font-bold text-[#617589] dark:text-[#94a3b8] uppercase tracking-wider">Rol</th>
-                    <th class="px-6 py-4 text-xs font-bold text-[#617589] dark:text-[#94a3b8] uppercase tracking-wider">Durum</th>
-                    <th class="px-6 py-4 text-xs font-bold text-[#617589] dark:text-[#94a3b8] uppercase tracking-wider">Kayıt Tarihi</th>
-                    <th class="px-6 py-4 text-xs font-bold text-[#617589] dark:text-[#94a3b8] uppercase tracking-wider text-right">İşlemler</th>
-                </tr>
-            </thead>
-            <tbody class="divide-y divide-[#f0f2f4] dark:divide-[#2d3b4a]">
-                <!-- Row 1 -->
-                <tr class="hover:bg-[#f8f9fa] dark:hover:bg-[#1e293b] transition-colors">
-                    <td class="px-6 py-4">
-                        <div class="flex items-center gap-3">
-                            <div class="size-8 rounded-full bg-blue-100 dark:bg-primary/20 flex items-center justify-center text-primary font-bold text-xs">KT</div>
-                            <span class="text-sm font-bold text-[#111418] dark:text-white">Kaan Tetik</span>
-                        </div>
-                    </td>
-                    <td class="px-6 py-4 text-sm text-[#617589] dark:text-[#94a3b8]">kaan@ismekblog.com</td>
-                    <td class="px-6 py-4">
-                        <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400">Yönetici</span>
-                    </td>
-                    <td class="px-6 py-4">
-                        <span class="flex items-center gap-1.5 text-sm font-medium text-green-600 dark:text-green-400">
-                            <span class="size-2 rounded-full bg-green-500"></span> Aktif
-                        </span>
-                    </td>
-                    <td class="px-6 py-4 text-sm text-[#617589] dark:text-[#94a3b8]">12 Haz 2023</td>
-                    <td class="px-6 py-4 text-right">
-                        <div class="flex justify-end gap-2">
-                            <button class="p-1.5 hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded transition-colors" title="Düzenle">
-                                <span class="material-symbols-outlined text-[18px]">edit</span>
-                            </button>
-                            <button class="p-1.5 hover:bg-orange-50 dark:hover:bg-orange-900/20 text-orange-600 dark:text-orange-400 rounded transition-colors" title="Askıya Al">
-                                <span class="material-symbols-outlined text-[18px]">block</span>
-                            </button>
-                            <button class="p-1.5 hover:bg-red-50 dark:hover:bg-red-900/20 text-red-600 dark:text-red-400 rounded transition-colors" title="Sil">
-                                <span class="material-symbols-outlined text-[18px]">delete</span>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
+        @if (Model != null && Model.Any())
+        {
+            <table class="w-full text-left">
+                <thead class="bg-[#f8f9fa] dark:bg-[#1e293b]">
+                    <tr>
+                        <th class="px-6 py-4 text-xs font-bold text-[#617589] dark:text-[#94a3b8] uppercase tracking-wider">Kullanıcı</th>
+                        <th class="px-6 py-4 text-xs font-bold text-[#617589] dark:text-[#94a3b8] uppercase tracking-wider">E-posta</th>
+                        <th class="px-6 py-4 text-xs font-bold text-[#617589] dark:text-[#94a3b8] uppercase tracking-wider">Rol</th>
+                        <th class="px-6 py-4 text-xs font-bold text-[#617589] dark:text-[#94a3b8] uppercase tracking-wider">Durum</th>
+                        <th class="px-6 py-4 text-xs font-bold text-[#617589] dark:text-[#94a3b8] uppercase tracking-wider">Kayıt Tarihi</th>
+                        <th class="px-6 py-4 text-xs font-bold text-[#617589] dark:text-[#94a3b8] uppercase tracking-wider text-right">İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-[#f0f2f4] dark:divide-[#2d3b4a]" id="userTableBody">
+                    @foreach (var user in Model)
+                    {
+                        if (user.IsDeleted == false)
+                        {
+                            <tr class="hover:bg-[#f8f9fa] dark:hover:bg-[#1e293b] transition-colors" data-role="@user.Role" data-status="@user.Status.ToString().ToLower()">
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="size-8 rounded-full bg-blue-100 dark:bg-primary/20 flex items-center justify-center text-primary font-bold text-xs">
+                                            @(user.UserName?.Substring(0, 2).ToUpper() ?? "??")
+                                        </div>
+                                        <span class="text-sm font-bold text-[#111418] dark:text-white">@user.UserName</span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 text-sm text-[#617589] dark:text-[#94a3b8]">@user.Email</td>
+                                <td class="px-6 py-4">
+                                    @{
+                                        var roleColor = user.Role switch
+                                        {
+                                            "ADMIN" => "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400",
+                                            "AUTHOR" => "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400",
+                                            "USER" => "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400",
+                                            "GUEST" => "bg-gray-100 text-gray-700 dark:bg-gray-900/30 dark:text-gray-400",
+                                            _ => "bg-gray-100 text-gray-700 dark:bg-gray-900/30 dark:text-gray-400"
+                                        };
 
-                <!-- Row 2 -->
-                <tr class="hover:bg-[#f8f9fa] dark:hover:bg-[#1e293b] transition-colors">
-                    <td class="px-6 py-4">
-                        <div class="flex items-center gap-3">
-                            <div class="size-8 rounded-full bg-[#f0f2f4] dark:bg-[#2d3b4a] flex items-center justify-center text-[#617589] dark:text-
+                                        var roleText = user.Role switch
+                                        {
+                                            "ADMIN" => "Yönetici",
+                                            "AUTHOR" => "Yazar",
+                                            "USER" => "Kullanıcı",
+                                            "GUEST" => "Misafir",
+                                            _ => user.Role
+                                        };
+                                    }
+                                    <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold @roleColor">@roleText</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    @if (user.Status)
+                                    {
+                                        <span class="flex items-center gap-1.5 text-sm font-medium text-green-600 dark:text-green-400">
+                                            <span class="size-2 rounded-full bg-green-500"></span> Aktif
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="flex items-center gap-1.5 text-sm font-medium text-red-600 dark:text-red-400">
+                                            <span class="size-2 rounded-full bg-red-500"></span> Pasif
+                                        </span>
+                                    }
+                                </td>
+                                <td class="px-6 py-4 text-sm text-[#617589] dark:text-[#94a3b8]">
+                                    @user.CreatedDate.ToString("dd MMM yyyy", new System.Globalization.CultureInfo("tr-TR"))
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <div class="flex justify-end gap-2">
+                                        <button class="p-1.5 hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded transition-colors" title="Düzenle">
+                                            <span class="material-symbols-outlined text-[18px]">edit</span>
+                                        </button>
+                                        <button class="p-1.5 hover:bg-orange-50 dark:hover:bg-orange-900/20 text-orange-600 dark:text-orange-400 rounded transition-colors" title="Durum Değiştir">
+                                            <span class="material-symbols-outlined text-[18px]">@(user.Status ? "block" : "check_circle")</span>
+                                        </button>
+                                        <button class="p-1.5 hover:bg-red-50 dark:hover:bg-red-900/20 text-red-600 dark:text-red-400 rounded transition-colors" title="Sil">
+                                            <span class="material-symbols-outlined text-[18px]">delete</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="p-12 text-center">
+                <span class="material-symbols-outlined text-[#617589] dark:text-[#94a3b8] text-6xl mb-4">group_off</span>
+                <p class="text-[#617589] dark:text-[#94a3b8] text-lg font-medium">Henüz kullanıcı bulunmuyor</p>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Create User Modal -->
+<div id="createUserModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-[#1a2632] rounded-2xl shadow-2xl w-full max-w-md transform transition-all scale-95 opacity-0" id="modalContent">
+        <!-- Modal Header -->
+        <div class="flex items-center justify-between p-6 border-b border-[#e5e7eb] dark:border-[#2d3b4a]">
+            <div class="flex items-center gap-3">
+                <div class="size-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-primary">person_add</span>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-[#111418] dark:text-white">Hızlı Kullanıcı Oluştur</h3>
+                    <p class="text-xs text-[#617589] dark:text-[#94a3b8]">Yeni bir kullanıcı hesabı oluşturun</p>
+                </div>
+            </div>
+            <button onclick="closeCreateUserModal()" class="p-2 hover:bg-[#f0f2f4] dark:hover:bg-[#2d3b4a] rounded-lg transition-colors">
+                <span class="material-symbols-outlined text-[#617589] dark:text-[#94a3b8]">close</span>
+            </button>
+        </div>
+
+        <!-- Modal Body -->
+        <form id="createUserForm" class="p-6 space-y-4" asp-controller="Admin" asp-action="QuickRegister">
+            <!-- Username -->
+            <div>
+                <label class="block text-sm font-medium text-[#111418] dark:text-white mb-2">
+                    Kullanıcı Adı <span class="text-red-500">*</span>
+                </label>
+                <div class="relative">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#617589] dark:text-[#94a3b8] text-[20px]">person</span>
+                    <input type="text"
+                           id="userName"
+                           placeholder="kaan_tetik"
+                           class="w-full pl-10 pr-4 py-2.5 rounded-lg border border-[#e5e7eb] dark:border-[#2d3b4a] dark:bg-[#24303c] text-sm text-[#111418] dark:text-white placeholder:text-[#617589] dark:placeholder:text-[#64748b] focus:border-primary focus:ring-2 focus:ring-primary/20"
+                           required />
+                </div>
+            </div>
+
+            <!-- Email -->
+            <div>
+                <label class="block text-sm font-medium text-[#111418] dark:text-white mb-2">
+                    E-posta Adresi <span class="text-red-500">*</span>
+                </label>
+                <div class="relative">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#617589] dark:text-[#94a3b8] text-[20px]">mail</span>
+                    <input type="email"
+                           id="email"
+                           placeholder="kullanici@example.com"
+                           class="w-full pl-10 pr-4 py-2.5 rounded-lg border border-[#e5e7eb] dark:border-[#2d3b4a] dark:bg-[#24303c] text-sm text-[#111418] dark:text-white placeholder:text-[#617589] dark:placeholder:text-[#64748b] focus:border-primary focus:ring-2 focus:ring-primary/20"
+                           required />
+                </div>
+            </div>
+
+            <!-- Role -->
+            <div>
+                <label class="block text-sm font-medium text-[#111418] dark:text-white mb-2">
+                    Kullanıcı Rolü <span class="text-red-500">*</span>
+                </label>
+                <div class="relative">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#617589] dark:text-[#94a3b8] text-[20px]">badge</span>
+                    <select id="role"
+                            class="w-full pl-10 pr-4 py-2.5 rounded-lg border border-[#e5e7eb] dark:border-[#2d3b4a] dark:bg-[#24303c] text-sm text-[#111418] dark:text-white focus:border-primary focus:ring-2 focus:ring-primary/20"
+                            required>
+                        <option value="">Rol Seçin</option>
+                        <option value="ADMIN">Yönetici - Tam yetki</option>
+                        <option value="AUTHOR">Yazar - İçerik oluşturma</option>
+                        <option value="USER">Kullanıcı - Normal yetki</option>
+                        <option value="GUEST">Misafir - Sınırlı erişim</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Password -->
+            <div>
+                <label class="block text-sm font-medium text-[#111418] dark:text-white mb-2">
+                    Şifre <span class="text-red-500">*</span>
+                </label>
+                <div class="relative">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#617589] dark:text-[#94a3b8] text-[20px]">lock</span>
+                    <input type="password"
+                           id="password"
+                           placeholder="••••••••"
+                           class="w-full pl-10 pr-12 py-2.5 rounded-lg border border-[#e5e7eb] dark:border-[#2d3b4a] dark:bg-[#24303c] text-sm text-[#111418] dark:text-white placeholder:text-[#617589] dark:placeholder:text-[#64748b] focus:border-primary focus:ring-2 focus:ring-primary/20"
+                           required
+                           minlength="6" />
+                    <button type="button" onclick="togglePassword()" class="absolute right-3 top-1/2 -translate-y-1/2 p-1 hover:bg-[#f0f2f4] dark:hover:bg-[#2d3b4a] rounded transition-colors">
+                        <span class="material-symbols-outlined text-[#617589] dark:text-[#94a3b8] text-[20px]" id="passwordToggleIcon">visibility</span>
+                    </button>
+                </div>
+                <p class="text-xs text-[#617589] dark:text-[#94a3b8] mt-1">En az 6 karakter olmalıdır</p>
+            </div>
+
+            <!-- Email Verification Toggle -->
+            <div class="flex items-center justify-between p-3 bg-[#f8f9fa] dark:bg-[#24303c] rounded-lg">
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary text-[20px]">verified_user</span>
+                    <span class="text-sm font-medium text-[#111418] dark:text-white">E-posta doğrulaması zorunlu değil</span>
+                </div>
+                <input type="checkbox"
+                       id="skipEmailVerification"
+                       checked
+                       class="w-5 h-5 rounded border-[#e5e7eb] dark:border-[#2d3b4a] text-primary focus:ring-2 focus:ring-primary/20" />
+            </div>
+        </form>
+
+        <!-- Modal Footer -->
+        <div class="flex gap-3 p-6 border-t border-[#e5e7eb] dark:border-[#2d3b4a]">
+            <button onclick="closeCreateUserModal()"
+                    class="flex-1 px-4 py-2.5 rounded-lg border border-[#e5e7eb] dark:border-[#2d3b4a] text-sm font-medium text-[#617589] dark:text-[#94a3b8] hover:bg-[#f0f2f4] dark:hover:bg-[#2d3b4a] transition-colors">
+                İptal
+            </button>
+            <button onclick="submitCreateUser()"
+                    class="flex-1 px-4 py-2.5 rounded-lg bg-primary text-white text-sm font-bold hover:bg-primary-dark transition-colors shadow-lg shadow-primary/20">
+                Kullanıcı Oluştur
+            </button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            filterTable();
+        });
+
+        // Role filter
+        document.getElementById('roleFilter').addEventListener('change', function() {
+            filterTable();
+        });
+
+        // Status filter
+        document.getElementById('statusFilter').addEventListener('change', function() {
+            filterTable();
+        });
+
+        function filterTable() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const roleFilter = document.getElementById('roleFilter').value;
+            const statusFilter = document.getElementById('statusFilter').value;
+            const rows = document.querySelectorAll('#userTableBody tr');
+
+            rows.forEach(row => {
+                const userName = row.querySelector('td:nth-child(1)').textContent.toLowerCase();
+                const email = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+                const role = row.getAttribute('data-role');
+                const status = row.getAttribute('data-status');
+
+                const matchesSearch = userName.includes(searchTerm) || email.includes(searchTerm);
+                const matchesRole = !roleFilter || role === roleFilter;
+                const matchesStatus = !statusFilter || status === statusFilter;
+
+                if (matchesSearch && matchesRole && matchesStatus) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        // Modal Functions
+        function openCreateUserModal() {
+            const modal = document.getElementById('createUserModal');
+            const modalContent = document.getElementById('modalContent');
+
+            modal.classList.remove('hidden');
+
+            // Animasyon için kısa bir gecikme
+            setTimeout(() => {
+                modalContent.classList.remove('scale-95', 'opacity-0');
+                modalContent.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function closeCreateUserModal() {
+            const modal = document.getElementById('createUserModal');
+            const modalContent = document.getElementById('modalContent');
+
+            modalContent.classList.remove('scale-100', 'opacity-100');
+            modalContent.classList.add('scale-95', 'opacity-0');
+
+            // Animasyon bittikten sonra gizle
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                // Formu temizle
+                document.getElementById('createUserForm').reset();
+            }, 200);
+        }
+
+        // Modal dışına tıklandığında kapat
+        document.getElementById('createUserModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeCreateUserModal();
+            }
+        });
+
+        // ESC tuşuyla kapat
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeCreateUserModal();
+            }
+        });
+
+        // Password Toggle
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('passwordToggleIcon');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.textContent = 'visibility_off';
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.textContent = 'visibility';
+            }
+        }
+
+        // Submit Create User
+        function submitCreateUser() {
+            const userName = document.getElementById('userName').value;
+            const email = document.getElementById('email').value;
+            const role = document.getElementById('role').value;
+            const password = document.getElementById('password').value;
+            const skipEmailVerification = document.getElementById('skipEmailVerification').checked;
+
+            // Validation
+            if (!userName || !email || !role || !password) {
+                alert('Lütfen tüm zorunlu alanları doldurun!');
+                return;
+            }
+
+            if (password.length < 6) {
+                alert('Şifre en az 6 karakter olmalıdır!');
+                return;
+            }
+
+            // API Call yapılacak
+            console.log({
+                userName,
+                email,
+                role,
+                password,
+                skipEmailVerification
+            });
+
+            // TODO: API'ye POST isteği at
+            // Şimdilik sadece modal'ı kapat
+            alert('Kullanıcı başarıyla oluşturuldu! (API entegrasyonu yapılacak)');
+            closeCreateUserModal();
+        }
+    </script>
+}

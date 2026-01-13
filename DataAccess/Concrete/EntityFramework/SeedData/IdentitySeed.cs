@@ -38,7 +38,10 @@ namespace DataAccess.Concrete.EntityFramework.SeedData
                         UserName = role.ToLower(),
                         Email = defaultUserEmail,
                         NormalizedEmail = defaultUserEmail.ToLower(),
-                        EmailConfirmed = true
+                        EmailConfirmed = true,
+                        IsDeleted = false,
+                        Status = true,
+                        CreatedDate = DateTime.Now,
                     };
 
                     // Parola ve rol atama

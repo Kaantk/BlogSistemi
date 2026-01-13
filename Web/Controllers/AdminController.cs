@@ -18,16 +18,23 @@ namespace Web.Controllers
             _httpClientFactory = httpClientFactory;
         }
 
+        #region Get İşlemleri
+
+        public IActionResult Index()
+        {
+            return View();
+        }
+
         [HttpGet]
         public async Task<IActionResult> Users()
         {
             var client = _httpClientFactory.CreateClient("ApiClient");
-            var response = await client.GetAsync("admin/users"); 
+            var response = await client.GetAsync("admin/getusers");
 
             if (!response.IsSuccessStatusCode)
             {
                 ViewBag.ErrorMessage = "API ile bağlantı kurulamadı.";
-                return View(new List<UsersViewModel>()); 
+                return View(new List<UsersViewModel>());
             }
 
             var result = await response.Content.ReadFromJsonAsync<ApiResponse<List<UsersViewModel>>>();
@@ -39,11 +46,6 @@ namespace Web.Controllers
             }
 
             return View(result.Data);
-        }
-
-        public IActionResult Index()
-        {
-            return View();
         }
 
         [HttpGet]
@@ -75,6 +77,25 @@ namespace Web.Controllers
         {
             return View();
         }
+
+        #endregion
+
+        #region Post İşlemleri
+
+        [HttpPost]
+        public IActionResult QuickRegister(QuickRegisterViewModel dto)
+        {
+            // Validation
+            if (!ModelState.IsValid)
+            {
+                ViewBag.ErrorMessage = "Lütfen form hatalarını düzeltin.";
+                return View(dto);
+            }
+
+            return View();
+        }
+
+        #endregion
 
     }
 }
