@@ -1,4 +1,5 @@
 ﻿using Core.Entities;
+using Core.Entities.Concrete;
 using Entities.Dtos.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -83,7 +84,7 @@ namespace Web.Controllers
         #region Post İşlemleri
 
         [HttpPost]
-        public IActionResult QuickRegister(QuickRegisterViewModel dto)
+        public async Task<IActionResult> QuickRegister(QuickRegisterViewModel dto)
         {
             // Validation
             if (!ModelState.IsValid)
@@ -92,7 +93,24 @@ namespace Web.Controllers
                 return View(dto);
             }
 
-            return View();
+            var client = _httpClientFactory.CreateClient("ApiClient");
+            var response = await client.PostAsJsonAsync("admin/quickregister", dto);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                ViewBag.ErrorMessage = "API ile bağlantı kurulamadı.";
+                return View(dto);
+            }
+
+            var result = await response.Content.ReadFromJsonAsync<ApiResponse<ApplicationUser>>();
+
+            if (result == null || !result.Success)
+            {
+                ViewBag.ErrorMessage = result?.Message ?? "Kullanıcı eklenirken bir hata oluştu.";
+                return View(dto);
+            }
+
+            return RedirectToAction("Users");
         }
 
         #endregion

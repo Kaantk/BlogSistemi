@@ -118,6 +118,7 @@ namespace Web.Controllers
             // Kullanıcı kayıt işlemleri yapılacak
             return View();
         }
+
         #endregion
     }
 }

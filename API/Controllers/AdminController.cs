@@ -1,9 +1,6 @@
 ﻿using Business.Abstract;
-using Core.Entities;
-using Core.Entities.Concrete;
-using Entities.Dtos.Auth.Response;
+using Entities.Dtos.Admin.Request;
 using Entities.Dtos.Common;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Web.Models.Admin.Request;
 
@@ -25,34 +22,41 @@ namespace API.Controllers
         {
             var result = await _adminService.GetUsersAsync();
 
+            // İşlem başarısızsa olduğu gibi dön
             if (!result.Success)
-            {
-                return Ok(new ApiResponse<List<UsersViewModel>>
-                {
-                    Success = false,
-                    Data = null,
-                    Message = result.Message
-                });
-            }
+                return BadRequest(result);
 
-            // ApplicationUser'ı UsersViewModel'e çevir
+            // ApplicationUser -> UsersViewModel map
             var usersViewModel = result.Data.Select(u => new UsersViewModel
             {
                 Id = u.Id,
                 UserName = u.UserName,
                 Email = u.Email,
-                Role = u.NormalizedUserName,
+                Role = u.NormalizedUserName, // (ileride Role ayrı alınmalı)
                 Status = u.Status,
                 IsDeleted = u.IsDeleted,
-                CreatedDate = u.CreatedDate,
+                CreatedDate = u.CreatedDate
             }).ToList();
 
+            // Aynı response yapısını KORU
             return Ok(new ApiResponse<List<UsersViewModel>>
             {
                 Success = true,
                 Data = usersViewModel,
-                Message = "Kullanıcılar başarıyla getirildi."
+                Message = result.Message
             });
+        }
+
+        [HttpPost("quickregister")]
+        public async Task<IActionResult> QuickRegister(QuickRegisterDto dto)
+        {
+            var result = await _adminService.QuickRegisterAsync(dto);
+
+            if (!result.Success)
+                return BadRequest(result);
+
+            return Ok(result);
         }
     }
 }
+

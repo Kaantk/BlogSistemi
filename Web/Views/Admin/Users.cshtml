@@ -199,7 +199,7 @@
 </div>
 
 <!-- Create User Modal -->
-<div id="createUserModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+@* <div id="createUserModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
     <div class="bg-white dark:bg-[#1a2632] rounded-2xl shadow-2xl w-full max-w-md transform transition-all scale-95 opacity-0" id="modalContent">
         <!-- Modal Header -->
         <div class="flex items-center justify-between p-6 border-b border-[#e5e7eb] dark:border-[#2d3b4a]">
@@ -307,11 +307,137 @@
                     class="flex-1 px-4 py-2.5 rounded-lg border border-[#e5e7eb] dark:border-[#2d3b4a] text-sm font-medium text-[#617589] dark:text-[#94a3b8] hover:bg-[#f0f2f4] dark:hover:bg-[#2d3b4a] transition-colors">
                 İptal
             </button>
-            <button onclick="submitCreateUser()"
+            <button type="submit"
                     class="flex-1 px-4 py-2.5 rounded-lg bg-primary text-white text-sm font-bold hover:bg-primary-dark transition-colors shadow-lg shadow-primary/20">
                 Kullanıcı Oluştur
             </button>
         </div>
+    </div>
+</div>
+ *@
+
+<!-- Create User Modal -->
+<div id="createUserModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-[#1a2632] rounded-2xl shadow-2xl w-full max-w-md transform transition-all scale-95 opacity-0" id="modalContent">
+        <form id="createUserForm" asp-controller="Admin" asp-action="QuickRegister" method="post">
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between p-6 border-b border-[#e5e7eb] dark:border-[#2d3b4a]">
+                <div class="flex items-center gap-3">
+                    <div class="size-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary">person_add</span>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-[#111418] dark:text-white">Hızlı Kullanıcı Oluştur</h3>
+                        <p class="text-xs text-[#617589] dark:text-[#94a3b8]">Yeni bir kullanıcı hesabı oluşturun</p>
+                    </div>
+                </div>
+                <button type="button" onclick="closeCreateUserModal()" class="p-2 hover:bg-[#f0f2f4] dark:hover:bg-[#2d3b4a] rounded-lg transition-colors">
+                    <span class="material-symbols-outlined text-[#617589] dark:text-[#94a3b8]">close</span>
+                </button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="p-6 space-y-4">
+                <!-- Username -->
+                <div>
+                    <label class="block text-sm font-medium text-[#111418] dark:text-white mb-2">
+                        Kullanıcı Adı <span class="text-red-500">*</span>
+                    </label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#617589] dark:text-[#94a3b8] text-[20px]">person</span>
+                        <input type="text"
+                               name="UserName"
+                               id="userName"
+                               placeholder="kaan_tetik"
+                               class="w-full pl-10 pr-4 py-2.5 rounded-lg border border-[#e5e7eb] dark:border-[#2d3b4a] dark:bg-[#24303c] text-sm text-[#111418] dark:text-white placeholder:text-[#617589] dark:placeholder:text-[#64748b] focus:border-primary focus:ring-2 focus:ring-primary/20"
+                               required />
+                    </div>
+                </div>
+
+                <!-- Email -->
+                <div>
+                    <label class="block text-sm font-medium text-[#111418] dark:text-white mb-2">
+                        E-posta Adresi <span class="text-red-500">*</span>
+                    </label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#617589] dark:text-[#94a3b8] text-[20px]">mail</span>
+                        <input type="email"
+                               name="Email"
+                               id="email"
+                               placeholder="kullanici@example.com"
+                               class="w-full pl-10 pr-4 py-2.5 rounded-lg border border-[#e5e7eb] dark:border-[#2d3b4a] dark:bg-[#24303c] text-sm text-[#111418] dark:text-white placeholder:text-[#617589] dark:placeholder:text-[#64748b] focus:border-primary focus:ring-2 focus:ring-primary/20"
+                               required />
+                    </div>
+                </div>
+
+                <!-- Role -->
+                <div>
+                    <label class="block text-sm font-medium text-[#111418] dark:text-white mb-2">
+                        Kullanıcı Rolü <span class="text-red-500">*</span>
+                    </label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#617589] dark:text-[#94a3b8] text-[20px]">badge</span>
+                        <select name="Role"
+                                id="role"
+                                class="w-full pl-10 pr-4 py-2.5 rounded-lg border border-[#e5e7eb] dark:border-[#2d3b4a] dark:bg-[#24303c] text-sm text-[#111418] dark:text-white focus:border-primary focus:ring-2 focus:ring-primary/20"
+                                required>
+                            <option value="">Rol Seçin</option>
+                            <option value="ADMIN">Yönetici - Tam yetki</option>
+                            <option value="AUTHOR">Yazar - İçerik oluşturma</option>
+                            <option value="USER">Kullanıcı - Normal yetki</option>
+                            <option value="GUEST">Misafir - Sınırlı erişim</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Password -->
+                <div>
+                    <label class="block text-sm font-medium text-[#111418] dark:text-white mb-2">
+                        Şifre <span class="text-red-500">*</span>
+                    </label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#617589] dark:text-[#94a3b8] text-[20px]">lock</span>
+                        <input type="password"
+                               name="Password"
+                               id="password"
+                               placeholder="••••••••"
+                               class="w-full pl-10 pr-12 py-2.5 rounded-lg border border-[#e5e7eb] dark:border-[#2d3b4a] dark:bg-[#24303c] text-sm text-[#111418] dark:text-white placeholder:text-[#617589] dark:placeholder:text-[#64748b] focus:border-primary focus:ring-2 focus:ring-primary/20"
+                               required
+                               minlength="6" />
+                        <button type="button" onclick="togglePassword()" class="absolute right-3 top-1/2 -translate-y-1/2 p-1 hover:bg-[#f0f2f4] dark:hover:bg-[#2d3b4a] rounded transition-colors">
+                            <span class="material-symbols-outlined text-[#617589] dark:text-[#94a3b8] text-[20px]" id="passwordToggleIcon">visibility</span>
+                        </button>
+                    </div>
+                    <p class="text-xs text-[#617589] dark:text-[#94a3b8] mt-1">En az 6 karakter olmalıdır</p>
+                </div>
+
+                <!-- Email Verification Toggle -->
+                <div class="flex items-center justify-between p-3 bg-[#f8f9fa] dark:bg-[#24303c] rounded-lg">
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary text-[20px]">verified_user</span>
+                        <span class="text-sm font-medium text-[#111418] dark:text-white">E-posta doğrulaması zorunlu değil</span>
+                    </div>
+                    <input type="checkbox"
+                           name="SkipEmailVerification"
+                           id="skipEmailVerification"
+                           checked
+                           class="w-5 h-5 rounded border-[#e5e7eb] dark:border-[#2d3b4a] text-primary focus:ring-2 focus:ring-primary/20" />
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="flex gap-3 p-6 border-t border-[#e5e7eb] dark:border-[#2d3b4a]">
+                <button type="button"
+                        onclick="closeCreateUserModal()"
+                        class="flex-1 px-4 py-2.5 rounded-lg border border-[#e5e7eb] dark:border-[#2d3b4a] text-sm font-medium text-[#617589] dark:text-[#94a3b8] hover:bg-[#f0f2f4] dark:hover:bg-[#2d3b4a] transition-colors">
+                    İptal
+                </button>
+                <button type="submit"
+                        class="flex-1 px-4 py-2.5 rounded-lg bg-primary text-white text-sm font-bold hover:bg-primary-dark transition-colors shadow-lg shadow-primary/20">
+                    Kullanıcı Oluştur
+                </button>
+            </div>
+        </form>
     </div>
 </div>
 
@@ -414,38 +540,5 @@
             }
         }
 
-        // Submit Create User
-        function submitCreateUser() {
-            const userName = document.getElementById('userName').value;
-            const email = document.getElementById('email').value;
-            const role = document.getElementById('role').value;
-            const password = document.getElementById('password').value;
-            const skipEmailVerification = document.getElementById('skipEmailVerification').checked;
-
-            // Validation
-            if (!userName || !email || !role || !password) {
-                alert('Lütfen tüm zorunlu alanları doldurun!');
-                return;
-            }
-
-            if (password.length < 6) {
-                alert('Şifre en az 6 karakter olmalıdır!');
-                return;
-            }
-
-            // API Call yapılacak
-            console.log({
-                userName,
-                email,
-                role,
-                password,
-                skipEmailVerification
-            });
-
-            // TODO: API'ye POST isteği at
-            // Şimdilik sadece modal'ı kapat
-            alert('Kullanıcı başarıyla oluşturuldu! (API entegrasyonu yapılacak)');
-            closeCreateUserModal();
-        }
     </script>
 }

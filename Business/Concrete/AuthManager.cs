@@ -1,12 +1,10 @@
-﻿
-
-using Business.Abstract;
+﻿using Business.Abstract;
 using Business.Constants;
 using Core.Entities.Concrete;
-using Core.Utilities.Results;
 using Core.Utilities.Security.Jwt;
 using Entities.Dtos.Auth.Request;
 using Entities.Dtos.Auth.Response;
+using Entities.Dtos.Common;
 using Microsoft.AspNetCore.Identity;
 
 namespace Business.Concrete
@@ -22,30 +20,62 @@ namespace Business.Concrete
             _tokenHelper = tokenHelper;
         }
 
-        public async Task<IDataResult<UserForLoginResponseDto>> LoginAsync(UserForLoginDto dto)
+        public async Task<ApiResponse<UserForLoginResponseDto>> LoginAsync(UserForLoginDto dto)
         {
-            // Kullanıcı varlığını kontrol et
+            // Giriş verisi doğrulaması
+            if (dto == null)
+            {
+                return new ApiResponse<UserForLoginResponseDto>
+                {
+                    Success = false,
+                    Data = null,
+                    Message = Messages.ValidationError
+                };
+            }
+
+            // Kullanıcı email adresine göre bulunur
             var user = await _userManager.FindByEmailAsync(dto.Email);
 
-            // Kullanıcı yoksa hata mesajı döndür
+            // Kullanıcı bulunamazsa hata döndürülür
             if (user == null)
-                return new ErrorDataResult<UserForLoginResponseDto>(Messages.UserNotFound);
+            {
+                return new ApiResponse<UserForLoginResponseDto>
+                {
+                    Success = false,
+                    Data = null,
+                    Message = Messages.UserNotFound
+                };
+            }
 
-            // Kullanıcı şifresini kontrol et
-            if (!await _userManager.CheckPasswordAsync(user, dto.Password))
-                return new ErrorDataResult<UserForLoginResponseDto>(Messages.PasswordError);
+            // Kullanıcı şifresi kontrol edilir
+            var passwordValid = await _userManager.CheckPasswordAsync(user, dto.Password);
+            if (!passwordValid)
+            {
+                return new ApiResponse<UserForLoginResponseDto>
+                {
+                    Success = false,
+                    Data = null,
+                    Message = Messages.PasswordError
+                };
+            }
 
-            // Kullanıcı rollerini al
+            // Kullanıcıya ait roller alınır
             var roles = await _userManager.GetRolesAsync(user);
 
-            // Access Token (JWT)
+            // JWT access token oluşturulur
             var accessToken = _tokenHelper.CreateToken(user, roles);
 
-            return new SuccessDataResult<UserForLoginResponseDto>(new UserForLoginResponseDto
+            // Başarılı giriş sonucu döndürülür
+            return new ApiResponse<UserForLoginResponseDto>
             {
-                AccessToken = accessToken.Token,
-                Expiration = accessToken.Expiration
-            });
+                Success = true,
+                Data = new UserForLoginResponseDto
+                {
+                    AccessToken = accessToken.Token,
+                    Expiration = accessToken.Expiration
+                },
+                Message = Messages.SuccessfulLogin
+            };
         }
     }
 }
